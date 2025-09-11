@@ -193,7 +193,8 @@ main{
     gap: 10px;
 }
 .list1{
-    border: 3px solid green;
+    padding: 10px;
+    border: 3px solid #151A2E;
     height: 500px;
     width: 300px;
     border-radius: 16px;
@@ -204,4 +205,30 @@ main{
     display: flex;
     gap: 20px;
     flex-direction: row;
+
+}
+
+.line{
+    width: 100%;
+    border: 1px solid #151A2E;
+}
+
+.listSettings{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: absolute;
+    top:  50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: green;
+    width: 400px;
+    height: 500px;
+    border-radius: 10px;
+}
+
+
+.d-none{
+    display: none;
 }
