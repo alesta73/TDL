@@ -228,7 +228,27 @@ main{
     border-radius: 10px;
 }
 
-
 .d-none{
     display: none;
+}
+
+.taskButton{
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: #d3d3d3;
+  cursor: pointer
+}
+
+.btnContainer{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+.taskContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+    width: 100%;
 }
