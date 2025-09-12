@@ -41,12 +41,21 @@ document.querySelector(".addTaskBtn").addEventListener("click", () => {
     }
 });
 
-// Click event for task button
-// document.querySelector(".taskButton").addEventListener("click", ()=>{
-//     console.log("click");
-//     dNoneToggler(ls);
+//Click event for task button
+document.querySelectorAll(".taskButton").forEach(button => {
+    button.addEventListener("click", (event) =>{
+        const listContainer = event.currentTarget.closest(".list1");
+        const taskList = listContainer.querySelector(".taskList");
 
-// });
+        const li = document.createElement("li");
+        const input = document.createElement("input");
+        input.type = "text";
+        input.classList.add("taskInput");
+
+        li.appendChild(input);
+        taskList.appendChild(li);
+    });
+});
 
 function dNoneToggler(data) {
     document.querySelector(data.classList.toggle("d-none"));
@@ -56,18 +65,35 @@ function dNoneToggler(data) {
 function listBuilder(data){
     //skapar container till listan
     let list = document.createElement("div");
-    list.classList.add("list");
+    list.classList.add("list1");
     //namn på lista
     let h2 = document.createElement("h2");
     h2.innerHTML = data;
     //linje under namn
     let line = document.createElement("div");
     line.classList.add("line");
+
+    let btnCont = document.createElement("div");
+    btnCont.classList.add("btnContainer");
+    
+    let tskBtn = document.createElement("button");
+    tskBtn.innerHTML = "+";
+    tskBtn.classList.add("taskButton"); 
+
+    btnCont.appendChild(tskBtn);
+    
     list.appendChild(h2);
     list.appendChild(line);
+    list.appendChild(btnCont);
     document.querySelector(".list-container").appendChild(list);
 }
 function taskBuilder(){
+    let input = document.createElement("input");
+    input.type="text";
+
+
+
+    
     let task = document.createElement("div");
     task.classList.add("task");
 }

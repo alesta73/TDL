@@ -20,7 +20,7 @@
     <aside class="sidebar collapsed">
         <header class="sidebar-header">
             <a href="#" class="header-logo">
-         <img src="../IMGS/logo.png" alt="">
+                <img src="../IMGS/logo.png" alt="">
             </a>
             <button class="sidebar-toggler">
                 <span class="material-symbols-outlined">
@@ -48,13 +48,34 @@
         </div>
         <div class="main-content">
             <div class="list-container">
+
                 <div class="list1">
+                    <h2>Idag / Datum</h2>
+                    <div class="line"></div>
+                    <div class="btnContainer">
+                        <!-- <label for="inputTask" hidden="hidden">Enter Task</label> -->
+                        <input type="text" id="inputTask" placeholder="Enter Task">
+                        <button type="button" class="taskButton">+</button>
+                    </div>
+                    <ul class="taskList">
+                        <li>
+                            <label>
+                                <input type="checkbox" />
+                                <span class="task-text">Buy groceries</span>
+                            </label>
+                            <button type="button" class="edit-task">Edit</button>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- <div class="list1">
                     <h2>Idag / Datum</h2>
                     <div class="line"></div>
                     <div class="taskContainer">Käka mat</div>
                     <div class="btnContainer"> <button class="taskButton">+</button></div>
                    
-                </div>
+                </div> -->
             </div>
             <button class="addtask"><span class="material-symbols-outlined">add</span></button>
         </div>
