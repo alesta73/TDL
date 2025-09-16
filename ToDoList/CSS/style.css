@@ -206,9 +206,10 @@ main {
 .list1 {
     padding: 10px;
     border: 3px solid #151A2E;
-    height: 500px;
+    height: auto;
     width: 300px;
     border-radius: 16px;
+    background: linear-gradient(#FFDBE9, #dec8ff );;
 }
 
 .list-container {
@@ -254,6 +255,7 @@ main {
 .noEdit{
     border: none;
     background: transparent;
+    pointer-events: none;
 }
 
 .noEdit:focus{
@@ -266,6 +268,22 @@ main {
 
 .taskInput {
     width: 70%;
+    padding: 5px;
+    /* border: 1px solid #151A2E; */
+    border-radius: 8px;
+    margin: auto 10px;
+}
+
+
+input:focus{
+    outline: none;
+}
+
+.taskInput:focus{
+    outline: none;
+}
+.miniTask{
+      width: 70%;
     padding: 5px;
     /* border: 1px solid #151A2E; */
     border-radius: 8px;

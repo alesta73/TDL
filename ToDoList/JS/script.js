@@ -8,11 +8,13 @@ let editTask = document.querySelectorAll(".edit-task");
 let sidebar = document.querySelector(".sidebar");
 
 const selectedList = document.getElementById("listNameID");
-const selectedDate = document.getElementById("selectedDate");
+const selectedDate = document.getElementById("dateID");
 window.onload = () => {
-  if (selectedList) selectedList.value = "";
-  if (selectedDate) selectedDate.value = "";
+    if (selectedList) selectedList.value = "";
+    if (selectedDate) selectedDate.value = "";
 };
+
+
 
 
 document.querySelector(".sidebar-toggler").addEventListener("click", () => {
@@ -24,12 +26,14 @@ document.querySelector(".sidebar-toggler").addEventListener("click", () => {
 sidebar.addEventListener("mouseenter", () => {
     if (sidebar.classList.contains("collapsed")) {
         sidebar.classList.remove("collapsed");
-    }});
+    }
+});
 
 sidebar.addEventListener("mouseleave", () => {
     if (!sidebar.classList.contains("collapsed")) {
         sidebar.classList.add("collapsed");
-    }});
+    }
+});
 
 
 closeListSettings.addEventListener("click", () => {
@@ -39,19 +43,52 @@ closeListSettings.addEventListener("click", () => {
 });
 
 addTask.addEventListener("click", () => {
+
     dNoneToggler(ls);
+    selectedList.focus();
 });
+
+selectedList.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        e.preventDefault(); // prevent form submission if inside a form
+        if (selectedDate && typeof selectedDate.showPicker === "function") {
+            selectedDate.showPicker(); // opens the native date picker
+        } else {
+            selectedDate.focus(); // fallback if showPicker is not supported
+        }
+    }
+});
+
+// selectedDate.addEventListener("keydown", (e) => {
+//     if (e.key === "Enter") {
+//         e.preventDefault(); // prevent form submission if inside a form
+//         if(selectedDate.value !== "" && selectedList.value!==""){
+//             addTaskBtn.click();
+//         }
+//     }
+// });
+
+selectedDate.addEventListener("change", (e) => {
+        if(selectedDate.value !== "" && selectedList.value!==""){
+            console.log("change")
+            createTaskList();
+        }
+});
+
+
+
 
 function dNoneToggler(data) {
     document.querySelector(data.classList.toggle("d-none"));
+    
 }
 
-document.addEventListener("keydown", (event) =>{
-    if(event.target.classList.contains("taskInput") && event.key === "Enter"){
+document.addEventListener("keydown", (event) => {
+    if (event.target.classList.contains("taskInput") && event.key === "Enter") {
         event.preventDefault();
         const container = event.target.closest(".btnContainer");
         const button = container.querySelector(".taskButton");
-        if(button) button.click(); 
+        if (button) button.click();
     }
 });
 
@@ -67,8 +104,14 @@ addTaskBtn.addEventListener("click", createTaskList);
 
 function createTaskList() {
     const dateInput = document.querySelector("#dateID");
-    const listInput = document.querySelector("#listNameID");
-    if(dateInput.value === "") {
+    // const listInput = document.querySelector("#listNameID");
+
+    if(selectedList.value ===""){
+        console.log("Ange namn på lista");
+        alert("Ange namn på lista");
+        return
+    }
+    if (dateInput.value === "") {
         console.log("Ange datum");
         alert("Ange datum");
         return;
@@ -80,25 +123,25 @@ function createTaskList() {
     const tomorrow = new Date();
     tomorrow.setDate(today.getDate() + 1);
 
-    today.setHours(0,0,0,0);
-    tomorrow.setHours(0,0,0,0);
-    selected.setHours(0,0,0,0);
+    today.setHours(0, 0, 0, 0);
+    tomorrow.setHours(0, 0, 0, 0);
+    selected.setHours(0, 0, 0, 0);
     let displayDate = "";
 
-    if(selected.getTime() === today.getTime()){
+    if (selected.getTime() === today.getTime()) {
         displayDate = "Idag";
-    } else if(selected.getTime() === tomorrow.getTime()){
+    } else if (selected.getTime() === tomorrow.getTime()) {
         displayDate = "Imorgon";
-    } else{
+    } else {
         displayDate = dateInput.value;
     }
-
-    listBuilder(displayDate);
+    let listName = selectedList.value;
+    listBuilder(listName, displayDate);
     // console.log(displayDate);
-    listInput.value = "";
+    selectedList.value = "";
     dateInput.value = "";
-    ls.classList.toggle("d-none");
-    // dNoneToggler(ls);
+    // ls.classList.toggle("d-none");
+    dNoneToggler(ls);
 }
 
 document.querySelectorAll(".taskButton").forEach(button => {
@@ -107,60 +150,48 @@ document.querySelectorAll(".taskButton").forEach(button => {
 
 
 function createTask(event) {
-    // console.log("In createTask");
     let inputTask = event.currentTarget.closest(".btnContainer").querySelector(".taskInput");
-    const listContainer = event.currentTarget.closest(".list1");
-    // const taskList = listContainer.querySelector(".taskList");
     const taskList = event.currentTarget.closest(".list1").querySelector(".taskList");
-    // console.log(taskList);
 
     const li = document.createElement("li");
     const input = document.createElement("input");
-
-    // console.log(listContainer);
     input.type = "text";
-    input.classList.add("taskInput");
-    input.classList.add("noEdit");
-    
+    input.classList.add("miniTask", "noEdit");
+
     if (inputTask.value === "") {
         alert("Ange en uppgift");
         return;
     } else {
-        
         input.value = inputTask.value;
         inputTask.value = "";
 
         let chkbox = document.createElement("input");
         chkbox.type = "checkbox";
         chkbox.classList.add("chkbox");
-        li.appendChild(chkbox);
 
         let btn = document.createElement("button");
         btn.classList.add("edit-task");
-        // btn.innerHTML = "edit";
         btn.type = "button";
-
 
         let span = document.createElement("span");
         span.classList.add("material-symbols-outlined");
-        // span.classList.add("edit-task");
         span.innerHTML = "edit";
 
         btn.appendChild(span);
-        btn.addEventListener("click", () => {
-            const li = btn.closest("li");
-            const input = li.querySelector(".taskInput");
-            if (input) {
-                input.focus();
-            }
+
+        // Edit button handler
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation(); // prevent document click from firing
+            input.classList.remove("noEdit");
+            input.focus();
         });
 
-
-
-        // let editBtn = document.createElement("button");
-        // editBtn.classList.add("edit-task");
-        // editBtn.innerHTML = "Edit";
-        // editBtn.classList.add(".edit-task");
+        // Enter to lock input
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                lockInput(input);
+            }
+        });
 
         li.appendChild(chkbox);
         li.appendChild(input);
@@ -169,13 +200,39 @@ function createTask(event) {
     }
 }
 
-function listBuilder(data) {
+document.addEventListener("click", (e) => {
+    const activeInput = document.querySelector("input.miniTask:not(.noEdit)");
+    if (activeInput && e.target !== activeInput && !e.target.closest(".edit-task")) {
+        lockInput(activeInput);
+    }
+});
+
+function lockInput(input) {
+    input.classList.add("noEdit");
+    input.blur();
+}
+
+// document.addEventListener("click", (e) => {
+//     const activeInput = document.querySelector("input.taskInput:not(.noEdit)");
+//     if (activeInput && e.target !== activeInput && !e.target.closest(".edit-task")) {
+//         lockInput(activeInput);
+//     }
+// });
+
+function lockInput(input){
+    input.classList.add("noEdit");
+    input.blur();
+}
+
+
+function listBuilder(listName, listDate) {
+    console.log(listName, listDate)
     //skapar container till listan
     let list = document.createElement("div");
     list.classList.add("list1");
     //namn på lista
     let h2 = document.createElement("h2");
-    h2.innerHTML = data;
+    h2.innerHTML = listName + ": "  + listDate;
     //linje under namn
     let line = document.createElement("div");
     line.classList.add("line");
@@ -185,12 +242,12 @@ function listBuilder(data) {
 
     let ul = document.createElement("ul");
     ul.classList.add("taskList");
-    
+
 
     let input = document.createElement("input");
     input.type = "text";
     input.classList.add("taskInput");
-    input.placeholder = "Enter Task";
+    input.placeholder = "Enter Tihi";
     btnCont.appendChild(input);
 
 
@@ -219,17 +276,17 @@ function taskBuilder() {
     task.classList.add("task");
 }
 
-function getDate() {
-    const d = new Date();
-    const weekdays = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
-    return weekdays[d.getDay()];
-}
+// function getDate() {
+//     const d = new Date();
+//     const weekdays = ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag"];
+//     return weekdays[d.getDay()];
+// }
 
 
 // sidebar.addEventListener("click", () => {
 //     if (sidebar.classList.contains("collapsed")) {
 //         sidebar.classList.remove("collapsed");
-//     }   
+//     }
 // });
 // sidebar.addEventListener("mouseout", () => {
 //     if (!sidebar.classList.contains("collapsed")) {
