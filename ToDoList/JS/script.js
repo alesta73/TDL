@@ -19,10 +19,7 @@ document.querySelector(".sidebar-toggler").addEventListener("click", () => {
     sidebar.classList.toggle("collapsed");
 });
 
-// sidebar.addEventListener("click", () => {
-//     console.log("clicked");
-//     sidebar.classList.toggle("collapsed");
-// });
+//  
 
 sidebar.addEventListener("mouseenter", () => {
     if (sidebar.classList.contains("collapsed")) {
