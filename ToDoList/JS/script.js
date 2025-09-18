@@ -59,14 +59,6 @@ selectedList.addEventListener("keydown", (e) => {
     }
 });
 
-// selectedDate.addEventListener("keydown", (e) => {
-//     if (e.key === "Enter") {
-//         e.preventDefault(); // prevent form submission if inside a form
-//         if(selectedDate.value !== "" && selectedList.value!==""){
-//             addTaskBtn.click();
-//         }
-//     }
-// });
 
 selectedDate.addEventListener("change", (e) => {
         if(selectedDate.value !== "" && selectedList.value!==""){
@@ -75,12 +67,8 @@ selectedDate.addEventListener("change", (e) => {
         }
 });
 
-
-
-
 function dNoneToggler(data) {
     document.querySelector(data.classList.toggle("d-none"));
-    
 }
 
 document.addEventListener("keydown", (event) => {
@@ -104,7 +92,6 @@ addTaskBtn.addEventListener("click", createTaskList);
 
 function createTaskList() {
     const dateInput = document.querySelector("#dateID");
-    // const listInput = document.querySelector("#listNameID");
 
     if(selectedList.value ===""){
         console.log("Ange namn på lista");
@@ -148,11 +135,9 @@ document.querySelectorAll(".taskButton").forEach(button => {
     button.addEventListener("click", createTask);
 });
 
-
 function createTask(event) {
     let inputTask = event.currentTarget.closest(".btnContainer").querySelector(".taskInput");
     const taskList = event.currentTarget.closest(".list1").querySelector(".taskList");
-
     const li = document.createElement("li");
     const input = document.createElement("input");
     input.type = "text";
