@@ -6,35 +6,122 @@ let addTaskBtn = document.querySelector(".addTaskBtn");
 let closeListSettings = document.querySelector(".closeListSettings");
 let editTask = document.querySelectorAll(".edit-task");
 let sidebar = document.querySelector(".sidebar");
+let navList = document.querySelector(".nav-list");
 
 const selectedList = document.getElementById("listNameID");
 const selectedDate = document.getElementById("dateID");
+
+
+let createNewListBtn = document.querySelector(".createNewListBtn");
 window.onload = () => {
     if (selectedList) selectedList.value = "";
     if (selectedDate) selectedDate.value = "";
 };
 
 
+createNewListBtn.addEventListener("click", () => {
+
+    if (sidebar.classList.contains("collapsed")) {
+        sidebar.classList.remove("collapsed");
+    }
+
+    let newListInput = document.createElement("input");
+    newListInput.type = "text";
+    newListInput.classList.add("newListInput");
+
+    let newListLink = document.createElement("div");
 
 
+    let li = document.createElement("li");
+    li.classList.add("nav-item");
+
+    let aElement = document.createElement("a");
+    aElement.href = "#";
+    aElement.classList.add("nav-link");
+
+    let firstSpan = document.createElement("span");
+    firstSpan.classList.add("material-symbols-outlined");
+    firstSpan.textContent = "dashboard";
+
+    let input = document.createElement("input");
+    input.classList.add("newListInput");
+    input.type = "text";
+
+    // let secondSpan = document.createElement("span");
+    // secondSpan.classList.add("nav-label");
+    // secondSpan.textContent= "test"
+
+    aElement.appendChild(firstSpan);
+    //    aElement.appendChild(secondSpan);
+    aElement.appendChild(input);
+    li.appendChild(aElement);
+    navList.appendChild(li);
+
+    let listName;
+
+    input.focus();
+
+    document.body.style.pointerEvents = "none";   // Stänger av klick
+    input.style.pointerEvents = "auto";
+
+    input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            if (input.value.trim() !== "") {
+                let listName = input.value.trim();
+                let secondSpan = document.createElement("span");
+                secondSpan.classList.add("nav-label");
+                secondSpan.textContent = listName;
+
+                aElement.removeChild(input);
+                aElement.appendChild(secondSpan);
+
+                // 🔓 lås upp när klart
+                document.body.style.pointerEvents = "auto";
+            } else {
+                alert("Ange namn på lista");
+            }
+        }
+    });
+    input.addEventListener("blur", () => {
+        li.remove();
+
+        document.body.style.pointerEvents = "auto"; // alltid lås upp
+    });
+})
+
+
+// Code for sidebar
 document.querySelector(".sidebar-toggler").addEventListener("click", () => {
     sidebar.classList.toggle("collapsed");
 });
 
 //  
 
-sidebar.addEventListener("mouseenter", () => {
-    if (sidebar.classList.contains("collapsed")) {
-        sidebar.classList.remove("collapsed");
-    }
-});
+// sidebar.addEventListener("click", () => {
+//     if (sidebar.classList.contains("collapsed")) {
+//         sidebar.classList.remove("collapsed");
+//     }
+// });
 
-sidebar.addEventListener("mouseleave", () => {
-    if (!sidebar.classList.contains("collapsed")) {
+// sidebar.addEventListener("mouseleave", () => {
+//     if (!sidebar.classList.contains("collapsed")) {
+//         sidebar.classList.add("collapsed");
+//     }
+// });
+
+// sidebar.addEventListener("mouseenter", () =>{
+//      if (sidebar.classList.contains("collapsed")) {
+//         sidebar.classList.remove("collapsed");
+//     }
+// })
+
+document.addEventListener("click", (e) => {
+    // Kolla om klicket INTE var i sidebaren
+    if (!sidebar.contains(e.target)) {
         sidebar.classList.add("collapsed");
     }
 });
-
+//end of sidebar
 
 closeListSettings.addEventListener("click", () => {
     dNoneToggler(ls);
@@ -69,10 +156,10 @@ selectedList.addEventListener("keydown", (e) => {
 // });
 
 selectedDate.addEventListener("change", (e) => {
-        if(selectedDate.value !== "" && selectedList.value!==""){
-            console.log("change")
-            createTaskList();
-        }
+    if (selectedDate.value !== "" && selectedList.value !== "") {
+        console.log("change")
+        createTaskList();
+    }
 });
 
 
@@ -80,7 +167,7 @@ selectedDate.addEventListener("change", (e) => {
 
 function dNoneToggler(data) {
     document.querySelector(data.classList.toggle("d-none"));
-    
+
 }
 
 document.addEventListener("keydown", (event) => {
@@ -106,7 +193,7 @@ function createTaskList() {
     const dateInput = document.querySelector("#dateID");
     // const listInput = document.querySelector("#listNameID");
 
-    if(selectedList.value ===""){
+    if (selectedList.value === "") {
         console.log("Ange namn på lista");
         alert("Ange namn på lista");
         return
@@ -219,7 +306,7 @@ function lockInput(input) {
 //     }
 // });
 
-function lockInput(input){
+function lockInput(input) {
     input.classList.add("noEdit");
     input.blur();
 }
@@ -232,7 +319,7 @@ function listBuilder(listName, listDate) {
     list.classList.add("list1");
     //namn på lista
     let h2 = document.createElement("h2");
-    h2.innerHTML = listName + ": "  + listDate;
+    h2.innerHTML = listName + ": " + listDate;
     //linje under namn
     let line = document.createElement("div");
     line.classList.add("line");

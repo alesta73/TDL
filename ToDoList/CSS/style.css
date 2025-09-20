@@ -209,7 +209,8 @@ main {
     height: auto;
     width: 300px;
     border-radius: 16px;
-    background: linear-gradient(#FFDBE9, #dec8ff );;
+    /* background: linear-gradient(#FFDBE9, #dec8ff );*/
+    background: linear-gradient(#C7DBF0, #A7C7E7)
 }
 
 .list-container {
@@ -230,11 +231,15 @@ main {
 
 
 .taskButton {
-    width: 30px;
-    height: 30px;
+    /* height: 100%; */
     border: none;
-    background: #d3d3d3;
-    cursor: pointer
+    background: #151A2E;
+    color: #F2F3FF;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    height: 100%;
+    aspect-ratio: 1/1;
+    
 }
 
 .btnContainer {
@@ -242,6 +247,7 @@ main {
     display: flex;
     justify-content: flex-start;
     width: 100%;
+    height: 35px;
 }
 
 .taskContainer {
@@ -407,3 +413,16 @@ li{
   text-shadow: 1px 1px lightgray;
 }
 
+.createNewListBtn{
+    background: #53AC53;
+}
+
+.newListInput{
+    display: flex;
+    padding: 5px;
+    /* border: 1px solid #151A2E; */
+    border-radius: 8px;
+    margin: 0;
+    width: 100%;
+    justify-content: flex-end;
+}
