@@ -23,7 +23,7 @@ function resetInputs() {
 function initEventListeners() {
     createNewListBtn.addEventListener("click", handleCreateNewList);
     document.querySelector(".sidebar-toggler").addEventListener("click", toggleSidebar);
-    sidebar.addEventListener("mouseenter", expandSidebar);
+    // sidebar.addEventListener("mouseenter", expandSidebar);
     document.addEventListener("click", handleDocumentClick);
     closeListSettings.addEventListener("click", closeSettings);
     addTask.addEventListener("click", openTaskInput);

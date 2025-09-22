@@ -1,0 +1,448 @@
+/* ---------------------------------------------------
+   Imports & Base Styles
+--------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    background-origin: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(#F2F3FF, #CBD4FF);
+}
+
+/* ---------------------------------------------------
+   Sidebar
+--------------------------------------------------- */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    /* width: 10%; */
+    height: 100vh;
+    background: #151A2E;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+
+}
+.sidebar.collapsed { 
+    width: 84px;
+    /* width: 4%; */
+    display: flex;
+    align-items: center;
+ }
+
+/* Sidebar Header */
+.sidebar .sidebar-header {
+    display: flex;
+    position: relative;
+    align-items: center;
+    padding: 15px 20px;
+    /* padding: 1.5rem; */
+    justify-content: space-between;
+}
+.sidebar-header .header-logo img {
+    height: 46px;
+    width: 46px;
+    display: block;
+    object-fit: contain;
+    border-radius: 50%;
+}
+.sidebar-header .sidebar-toggler {
+    position: absolute;
+    right: 25px;
+    height: 35px;
+    width: 35px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #EEF2FF;
+    transition: 0.4s ease;
+    margin: 0;
+    padding: 0;
+}
+.sidebar-header .sidebar-toggler:hover { background: #d9e1fd; }
+.sidebar.collapsed .sidebar-toggler { transform: translateY(65px); }
+.sidebar-header .sidebar-toggler span { font-size: 1.75rem; transition: 0.4s ease; }
+.sidebar.collapsed .sidebar-toggler span { transform: rotate(180deg); }
+
+/* Sidebar Navigation */
+
+.sidebar-nav {
+    /* margin-top: 30px; */
+    /* flex-grow: 1; */
+    /* overflow-y: auto; */
+    display: flex;
+    justify-content: center;
+    /* padding: 25px; */
+    width: 100%;
+
+}
+.sidebar-nav .nav-list {
+    width: 100%;
+    margin-left: 25px;
+    margin-right: 25px;
+    list-style: none;
+    gap: 4px;
+    transition: 0.4s ease;
+}
+.sidebar.collapsed .sidebar-nav .primary-nav { transform: translateY(55px); }
+
+.sidebar-nav .nav-item .nav-link {
+    color: #fff;
+    display: flex;
+    text-decoration: none;
+    white-space: nowrap;
+    padding: 8px;
+    align-items: center;
+    border-radius: 8px;
+    transition: 0.4s ease;
+    transform: translateY(15px);
+    /* width: 100%; */
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.sidebar-nav .nav-item:hover > .nav-link {
+    background: #EEF2FF;
+    color: #151A2E;
+}
+.sidebar-nav .nav-link .nav-label { transition: opacity 0.3s ease; }
+.sidebar.collapsed .nav-link .nav-label {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+}
+
+
+
+/* ---------------------------------------------------
+   Topbar / Header
+--------------------------------------------------- */
+.topbar {
+    background: #6F8FAF;
+    height: 85px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 30px;
+}
+.acc {
+    display: flex;
+    height: 50%;
+    aspect-ratio: 1/1;
+    background: #233C67;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #EEF2FF;
+    cursor: pointer;
+    transition: 0.4s ease;
+}
+.acc:hover {
+    background-color: #d9e1fd;
+    color: #151A2E;
+    transition: 0.4s ease;
+}
+
+/* ---------------------------------------------------
+   Main Layout
+--------------------------------------------------- */
+main {
+    margin-left: 85px;
+    height: 100%;
+    padding: 1.75rem;
+}
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 30px;
+}
+.main-content {
+    display: flex;
+    gap: 10px;
+}
+.list-container {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+}
+
+/* ---------------------------------------------------
+   List & Task Cards
+--------------------------------------------------- */
+.list1 {
+    padding: 10px;
+    border: 2px solid #b1badf;
+    height: auto;
+    width: 300px;
+    border-radius: 16px;
+    /* background: linear-gradient(#b0cbf0, #cacaff); */
+    background: #b0cbf0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+
+
+}
+.line {
+    width: 100%;
+    border: 1px solid #151A2E;
+}
+
+/* ---------------------------------------------------
+   Task Input & Buttons
+--------------------------------------------------- */
+.btnContainer {
+    padding: 0;
+    margin: 10px 0;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    height: 35px;
+}
+.taskInput, .miniTask {
+    flex: 1;
+    width: 70%;
+    padding: 5px;
+    border-radius: 8px;
+    margin: auto 10px;
+}
+.taskInput:focus, .miniTask:focus, input:focus { outline: none; }
+.taskButton {
+    border: none;
+    background: #151A2E;
+    color: #F2F3FF;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    height: 32px;
+    aspect-ratio: 1/1;
+}
+.addtask {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    background: #151A2E;
+    color: #EEF2FF;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+.addtask:hover, .taskButton:hover {
+    /* background-color: #d9e1fd; */
+    /* color: #151A2E; */
+    background: #2a3356; /* lite ljusare/djupare blå vid hover */
+
+    transition: 0.4s ease;
+}
+
+/* ---------------------------------------------------
+   Task List Items
+--------------------------------------------------- */
+.taskList > li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding-left: 10px;
+    /* padding-right: 10px; */
+}
+.noEdit {
+    border: none;
+    background: transparent;
+    pointer-events: none;
+}
+.noEdit:focus { outline: 2px solid black; }
+/* .edit-task {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #151A2E;
+    transition: 0.4s ease;
+    cursor: pointer;
+    background: #FFBF00;
+    padding: 5px;
+    width: 25px;
+    height: 25px;
+}
+.edit-task:hover {
+    background: #d9e1fd;
+    color: #151A2E;
+    transition: 0.4s ease;
+} */
+
+.edit-task {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    background: #151A2E; /* matchar dina andra knappar */
+    color: #EEF2FF;      /* ikon/textfärg */
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px; /* ikonstorlek */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* subtil skugga så den inte försvinner i bakgrunden */
+}
+
+.edit-task:hover {
+    background: #2a3356; /* lite ljusare/djupare blå vid hover */
+    transform: scale(1.1); /* liten animation */
+}
+
+
+
+/* ---------------------------------------------------
+   Miscellaneous & Utility
+--------------------------------------------------- */
+.material-symbols-outlined {
+    font-size: 18px !important;
+    line-height: 1;
+}
+.d-none { display: none !important; }
+.dateLabel { text-shadow: 1px 1px lightgray; }
+.exitBtnContainer { display: flex; justify-content: space-between; }
+
+/* ---------------------------------------------------
+   List Settings Modal
+--------------------------------------------------- */
+.listSettings {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    z-index: 10;
+}
+.closeListSettings {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+.closeListSettings:hover {
+    color: red;
+    transition: 0.4s ease;
+}
+
+/* ---------------------------------------------------
+   Forms & Inputs
+--------------------------------------------------- */
+#dateID, .listNameInput {
+    padding: 5px;
+    border-radius: 0.5rem;
+    margin: 10px 0;
+}
+.addTaskBtn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    background: #151A2E;
+    color: #EEF2FF;
+    cursor: pointer;
+}
+.createNewListBtn { background: #53AC53; }
+.newListInput {
+    display: flex;
+    padding: 5px;
+    border-radius: 8px;
+    margin: 0;
+    margin-left: 15px;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+/* --- Responsive: Tablets and below --- */
+@media (max-width: 991px) {
+    .sidebar {
+        width: 70px;
+    }
+    main {
+        margin-left: 70px;
+        padding: 1rem;
+    }
+    .list1 {
+        width: 100%;
+        min-width: 220px;
+    }
+    .main-content, .list-container {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+
+/* --- Responsive: Mobile --- */
+@media (max-width: 767px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        min-width: unset;
+    }
+    main {
+        margin-left: 0;
+        padding: 0.5rem;
+    }
+    .main-header, .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+    .main-content, .list-container {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .list1 {
+        width: 100%;
+        min-width: unset;
+    }
+    .sidebar-header {
+        padding: 10px;
+    }
+    .sidebar-nav .nav-list {
+        margin: 0;
+        padding: 0;
+    }
+    .listSettings {
+        width: 95vw;
+        left: 50%;
+        top: 10%;
+        transform: translate(-50%, 0);
+    }
+}
+
+/* --- Responsive: Extra Small Devices --- */
+@media (max-width: 480px) {
+    .list1, .listSettings {
+        width: 100vw;
+        min-width: unset;
+        border-radius: 0;
+    }
+    .main-header, .topbar {
+        padding: 5px;
+    }
+}
