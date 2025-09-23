@@ -12,6 +12,7 @@ const createNewListBtn = document.querySelector(".createNewListBtn");
 // --- Initialization ---
 window.onload = resetInputs;
 initEventListeners();
+let curJSON = readJSON();
 
 // --- Functions ---
 
@@ -54,7 +55,6 @@ function handleCreateNewList() {
 
     let newListLink = document.createElement("div");
 
-
     let li = document.createElement("li");
     li.classList.add("nav-item");
 
@@ -90,6 +90,8 @@ function handleCreateNewList() {
                 aElement.appendChild(secondSpan);
                 // lås upp när klart
                 document.body.style.pointerEvents = "auto";
+
+                updateJSON([listName, "newList"]);
             } else {
                 alert("Ange namn på lista");
             }
@@ -103,11 +105,11 @@ function handleCreateNewList() {
 
 function handleListInputKeydown(e) {
     if (e.key === "Enter") {
-        e.preventDefault(); 
+        e.preventDefault();
         if (selectedDate && typeof selectedDate.showPicker === "function") {
-            selectedDate.showPicker(); 
+            selectedDate.showPicker();
         } else {
-            selectedDate.focus(); 
+            selectedDate.focus();
         }
     }
 }
@@ -164,7 +166,7 @@ function listBuilder(listName, listDate) {
 
     let list = document.createElement("div");
     list.classList.add("list1");
-   
+
     let h2 = document.createElement("h2");
     h2.innerHTML = listName + ": " + listDate;
 
@@ -273,3 +275,60 @@ function lockInput(input) { input.classList.add("noEdit"); input.blur(); }
 function dNoneToggler(data) { data.classList.toggle("d-none"); }
 function closeSettings() { dNoneToggler(ls); selectedDate.value = ""; selectedList.value = ""; }
 function openTaskInput() { dNoneToggler(ls); selectedList.focus(); }
+
+
+// --- JSON handling ---
+
+function createJSON() {
+    console.log("I createJSON");
+    //if no JSON: 
+    //create empty mainList
+    const mainList = {};
+    localStorage.setItem("mainList", mainList);
+    readJSON();
+
+}
+
+function readJSON() {
+    //have to add errorhandling try catch. 
+    if (localStorage.getItem("mainList")) {
+        let jsonString = localStorage.getItem("mainList");
+        console.log(jsonString);
+        return jsonString;
+    } else {
+        alert("ingen localStorage");
+        createJSON();
+    }
+
+}
+
+function updateJSON(data) {
+    let curJSON = readJSON();
+    let obj = JSON.parse(curJSON);
+
+    if (data[1] === "newList") {
+        let listName = data[0];
+
+        let newList = {
+            taskList: []
+        };
+
+        obj[listName] = newList;
+
+        localStorage.setItem("mainList", JSON.stringify(obj));
+    } else {
+        console.log("nå annat");
+    }
+
+
+    //parse json and look for relevant data point
+    // replace said data point
+    // call createJSON || make a new setItem call directly from updateJSON. 
+}
+
+function deleteJSON() {
+    //take call from updateJSON to delete
+    //Recieve obj to delete
+    //delete said obj
+    //call updateJSON with new list
+}
