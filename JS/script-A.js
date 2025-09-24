@@ -8,12 +8,16 @@ const navList = document.querySelector(".nav-list");
 const selectedList = document.getElementById("listNameID");
 const selectedDate = document.getElementById("dateID");
 const createNewListBtn = document.querySelector(".createNewListBtn");
+const listNameH1 = document.querySelector(".listname");
+const listContainer = document.querySelector(".list-container"); 
 
 // --- Initialization ---
 window.onload = resetInputs;
 initEventListeners();
-let curJSON = readJSON();
-
+// initMainList();
+createJSON();
+loadListsFromLocalStorage();
+loadListToMain();
 // --- Functions ---
 
 function resetInputs() {
@@ -34,15 +38,104 @@ function initEventListeners() {
     document.querySelectorAll(".taskButton").forEach(btn => btn.addEventListener("click", createTask));
     document.addEventListener("keydown", handleTaskInputEnter);
     document.addEventListener("click", handleMiniTaskBlur);
+    navList.addEventListener("click", handleNavListClick);
+    
 }
 
 // --- Sidebar Functions ---
-
+function handleNavListClick(e) {
+    e.preventDefault();
+    if(e.target.closest("a")) {
+    const clickedListName = e.target.closest("a").querySelector(".nav-label").textContent;
+    loadListToMain(clickedListName);
+    console.log("Clicked list name:", clickedListName);
+    }
+};
 function toggleSidebar() { sidebar.classList.toggle("collapsed"); }
 function expandSidebar() { if (sidebar.classList.contains("collapsed")) sidebar.classList.remove("collapsed"); }
 function handleDocumentClick(e) { if (!sidebar.contains(e.target)) sidebar.classList.add("collapsed"); }
 
 // --- List Creation Functions ---
+
+//laddar in listor från localStorage
+// function initMainList() {
+//     console.log("I initMainList");
+//     let curJSON = readJSON();
+//     if (!curJSON) {
+//         let defaultData = {
+//             "Default List": {}
+//         };
+//         localStorage.setItem("mainList", JSON.stringify(defaultData));
+//     }
+// }
+function loadListsFromLocalStorage() {
+    let obj = readJSON();
+    console.log("Obj från readJSON:", obj);
+    if (obj) {
+        let parsedObj = JSON.parse(obj);
+        console.log("ParsedObj:", parsedObj);
+        for (let listName in parsedObj) {
+            console.log("Listnamn:", listName);
+
+            let li = document.createElement("li");
+            li.classList.add("nav-item");
+
+            let aElement = document.createElement("a");
+            aElement.href = "#";
+            aElement.classList.add("nav-link");
+            aElement.addEventListener("click", loadListToMain(listName));
+
+            let firstSpan = document.createElement("span");
+            firstSpan.classList.add("material-symbols-outlined");
+            firstSpan.textContent = "dashboard";
+
+            let secondSpan = document.createElement("span");
+            secondSpan.classList.add("nav-label");
+            secondSpan.textContent = listName;
+
+
+            aElement.appendChild(firstSpan);
+            aElement.appendChild(secondSpan);
+            li.appendChild(aElement);
+            navList.appendChild(li);
+        }
+    }
+}
+
+
+function loadListToMain(listName) {
+    //laddar in vald lista till main
+    let curJSON = readJSON();
+    let obj = JSON.parse(curJSON);
+    if(!listName) { listName = Object.keys(obj)[0]; }
+    console.log("Loading list:", listName);
+    const selectedList = obj[listName];
+    if(!selectedList){
+        console.warn("No list found for:", listName);
+        return;
+    } 
+
+    clearMain();
+    listNameH1.textContent = listName;
+    selectedList.forEach(taskList => {
+        listBuilder(taskList.name, taskList.date);
+    });
+
+
+    // console.log(obj);
+    // let firstKey = Object.keys(obj)[0];
+    // let selectedList = obj[firstKey];
+    // console.log("FirstKey:", firstKey);
+  //  console.log(selectedList);
+
+    // let listName = firstKey;
+    // listNameH1.textContent = listName;
+
+    // selectedList.forEach(taskList => {
+    //     console.log("TaskList:", taskList);
+    //     listBuilder(taskList.name, taskList.date);
+    // });
+}
 
 function handleCreateNewList() {
 
@@ -52,8 +145,6 @@ function handleCreateNewList() {
     let newListInput = document.createElement("input");
     newListInput.type = "text";
     newListInput.classList.add("newListInput");
-
-    let newListLink = document.createElement("div");
 
     let li = document.createElement("li");
     li.classList.add("nav-item");
@@ -154,6 +245,7 @@ function createTaskList() {
     }
     let listName = selectedList.value;
     listBuilder(listName, displayDate);
+    updateJSON([listName, "taskList", getCurrentList(), displayDate]);
 
     selectedList.value = "";
     dateInput.value = "";
@@ -275,31 +367,30 @@ function lockInput(input) { input.classList.add("noEdit"); input.blur(); }
 function dNoneToggler(data) { data.classList.toggle("d-none"); }
 function closeSettings() { dNoneToggler(ls); selectedDate.value = ""; selectedList.value = ""; }
 function openTaskInput() { dNoneToggler(ls); selectedList.focus(); }
+function getCurrentList() { let listName = listNameH1.textContent; return listName; }
+function clearMain() { console.log("I clearmain"); document.querySelector(".list-container").innerHTML = ""; listNameH1.textContent = ""; }
 
-
+// --- List loading ---
 // --- JSON handling ---
 
-function createJSON() {
-    console.log("I createJSON");
-    //if no JSON: 
-    //create empty mainList
-    const mainList = {};
-    localStorage.setItem("mainList", mainList);
-    readJSON();
+function saveMainList(updatedList) {
+    localStorage.setItem("mainList", JSON.stringify(updatedList));
+}
 
+
+function createJSON() {
+    let curJSON = readJSON();
+    if (!curJSON) {
+        const defaultData = {
+            "Default List": []
+        };
+        saveMainList(defaultData);
+    } //om mainList redan finns, gör inget
 }
 
 function readJSON() {
-    //have to add errorhandling try catch. 
-    if (localStorage.getItem("mainList")) {
-        let jsonString = localStorage.getItem("mainList");
-        console.log(jsonString);
-        return jsonString;
-    } else {
-        alert("ingen localStorage");
-        createJSON();
-    }
-
+    //hämtar mainList från localStorage
+    return localStorage.getItem("mainList");
 }
 
 function updateJSON(data) {
@@ -309,17 +400,37 @@ function updateJSON(data) {
     if (data[1] === "newList") {
         let listName = data[0];
 
-        let newList = {
-            taskList: []
-        };
+        let newList = [];
 
         obj[listName] = newList;
 
-        localStorage.setItem("mainList", JSON.stringify(obj));
-    } else {
-        console.log("nå annat");
+        saveMainList(obj);
+        // localStorage.setItem("mainList", JSON.stringify(obj));
     }
+    else if (data[1] === "taskList") {
+        let taskListName = data[0];
+        let currentList = data[2];
+        let taskDate = data[3];
 
+        console.log("CurrentList:", currentList);
+        console.log("TaskListName:", taskListName);
+
+        const newTaskList = {
+            id: crypto.randomUUID(),
+            name: taskListName,
+            date: taskDate,
+            tasks: []
+        };
+
+        obj[currentList].push(newTaskList);
+        saveMainList(obj);
+        // localStorage.setItem("mainList", JSON.stringify(obj))
+        console.log("Created task list: ", newTaskList);
+    } else if (data[1] === "newTask") {
+        let taskListName = data[0];
+        let taskName = data[2];
+        let currentList = data[3];
+    }
 
     //parse json and look for relevant data point
     // replace said data point

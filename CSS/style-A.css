@@ -98,6 +98,8 @@ body {
 }
 .sidebar.collapsed .sidebar-nav .primary-nav { transform: translateY(55px); }
 
+
+
 .sidebar-nav .nav-item .nav-link {
     color: #fff;
     display: flex;
@@ -117,6 +119,7 @@ body {
     color: #151A2E;
 }
 .sidebar-nav .nav-link .nav-label { transition: opacity 0.3s ease; }
+
 .sidebar.collapsed .nav-link .nav-label {
     display: none;
     opacity: 0;
@@ -166,26 +169,29 @@ main {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 30px;
+    /* padding: 20px 30px; */
 }
 .main-content {
     display: flex;
-    gap: 10px;
 }
 .list-container {
     display: flex;
     gap: 20px;
-    flex-direction: row;
+    /* flex-direction: column; */
+    flex-wrap:wrap;
 }
 
 /* ---------------------------------------------------
    List & Task Cards
 --------------------------------------------------- */
 .list1 {
+    margin-right: 10px;
     padding: 10px;
     border: 2px solid #b1badf;
     height: auto;
-    width: 300px;
+    /* width: 300px; */
+    max-width: 300px;
+    /* min-width: 250px; */
     border-radius: 16px;
     /* background: linear-gradient(#b0cbf0, #cacaff); */
     background: #b0cbf0;
@@ -375,74 +381,3 @@ main {
     justify-content: flex-end;
 }
 
-/* --- Responsive: Tablets and below --- */
-@media (max-width: 991px) {
-    .sidebar {
-        width: 70px;
-    }
-    main {
-        margin-left: 70px;
-        padding: 1rem;
-    }
-    .list1 {
-        width: 100%;
-        min-width: 220px;
-    }
-    .main-content, .list-container {
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-}
-
-/* --- Responsive: Mobile --- */
-@media (max-width: 767px) {
-    .sidebar {
-        position: relative;
-        width: 100%;
-        height: auto;
-        flex-direction: row;
-        min-width: unset;
-    }
-    main {
-        margin-left: 0;
-        padding: 0.5rem;
-    }
-    .main-header, .topbar {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 10px;
-    }
-    .main-content, .list-container {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .list1 {
-        width: 100%;
-        min-width: unset;
-    }
-    .sidebar-header {
-        padding: 10px;
-    }
-    .sidebar-nav .nav-list {
-        margin: 0;
-        padding: 0;
-    }
-    .listSettings {
-        width: 95vw;
-        left: 50%;
-        top: 10%;
-        transform: translate(-50%, 0);
-    }
-}
-
-/* --- Responsive: Extra Small Devices --- */
-@media (max-width: 480px) {
-    .list1, .listSettings {
-        width: 100vw;
-        min-width: unset;
-        border-radius: 0;
-    }
-    .main-header, .topbar {
-        padding: 5px;
-    }
-}
