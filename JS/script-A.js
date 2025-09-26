@@ -312,7 +312,7 @@ function createTask(event) {
     let taskListName = event.currentTarget.closest(".list1").querySelector("h2").textContent.split(":")[0];
     // console.log("TaskListName:", taskListName);
 
-    list = document.createElement("li");
+    const li = document.createElement("li");
     const input = document.createElement("input");
     input.type = "text";
     input.classList.add("miniTask", "noEdit");
