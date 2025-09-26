@@ -9,7 +9,7 @@ const selectedList = document.getElementById("listNameID");
 const selectedDate = document.getElementById("dateID");
 const createNewListBtn = document.querySelector(".createNewListBtn");
 const listNameH1 = document.querySelector(".listname");
-const listContainer = document.querySelector(".list-container"); 
+const listContainer = document.querySelector(".list-container");
 
 // --- Initialization ---
 window.onload = resetInputs;
@@ -17,7 +17,7 @@ initEventListeners();
 // initMainList();
 createJSON();
 loadListsFromLocalStorage();
-loadListToMain();
+
 // --- Functions ---
 
 function resetInputs() {
@@ -39,16 +39,17 @@ function initEventListeners() {
     document.addEventListener("keydown", handleTaskInputEnter);
     document.addEventListener("click", handleMiniTaskBlur);
     navList.addEventListener("click", handleNavListClick);
-    
+
 }
 
 // --- Sidebar Functions ---
 function handleNavListClick(e) {
     e.preventDefault();
-    if(e.target.closest("a")) {
-    const clickedListName = e.target.closest("a").querySelector(".nav-label").textContent;
-    loadListToMain(clickedListName);
-    console.log("Clicked list name:", clickedListName);
+    if (e.target.closest("a")) {
+        const clickedListName = e.target.closest("a").querySelector(".nav-label").textContent;
+        console.log("i handlenavclick")
+        loadListToMain(clickedListName);
+        // console.log("Clicked list name:", clickedListName);
     }
 };
 function toggleSidebar() { sidebar.classList.toggle("collapsed"); }
@@ -57,24 +58,15 @@ function handleDocumentClick(e) { if (!sidebar.contains(e.target)) sidebar.class
 
 // --- List Creation Functions ---
 
-//laddar in listor från localStorage
-// function initMainList() {
-//     console.log("I initMainList");
-//     let curJSON = readJSON();
-//     if (!curJSON) {
-//         let defaultData = {
-//             "Default List": {}
-//         };
-//         localStorage.setItem("mainList", JSON.stringify(defaultData));
-//     }
-// }
 function loadListsFromLocalStorage() {
+    console.log("I loadlistsfromls")
     let obj = readJSON();
-    console.log("Obj från readJSON:", obj);
+    // console.log("Obj från readJSON:", obj);
     if (obj) {
         let parsedObj = JSON.parse(obj);
-        console.log("ParsedObj:", parsedObj);
+        // console.log("ParsedObj:", parsedObj);
         for (let listName in parsedObj) {
+            console.log(parsedObj)
             console.log("Listnamn:", listName);
 
             let li = document.createElement("li");
@@ -102,39 +94,25 @@ function loadListsFromLocalStorage() {
     }
 }
 
-
 function loadListToMain(listName) {
     //laddar in vald lista till main
     let curJSON = readJSON();
     let obj = JSON.parse(curJSON);
-    if(!listName) { listName = Object.keys(obj)[0]; }
-    console.log("Loading list:", listName);
+    if (!listName) { listName = Object.keys(obj)[0]; }
+    // console.log("Loading list:", listName);
     const selectedList = obj[listName];
-    if(!selectedList){
+    if (!selectedList) {
         console.warn("No list found for:", listName);
         return;
-    } 
+    }
 
     clearMain();
     listNameH1.textContent = listName;
-    selectedList.forEach(taskList => {
-        listBuilder(taskList.name, taskList.date);
+    console.log(selectedList);
+    Object.values(selectedList.taskLists).forEach(taskList => {
+        // console.log(taskList);           // hela objektet
+        listBuilder(taskList); // anropa din listBuilder
     });
-
-
-    // console.log(obj);
-    // let firstKey = Object.keys(obj)[0];
-    // let selectedList = obj[firstKey];
-    // console.log("FirstKey:", firstKey);
-  //  console.log(selectedList);
-
-    // let listName = firstKey;
-    // listNameH1.textContent = listName;
-
-    // selectedList.forEach(taskList => {
-    //     console.log("TaskList:", taskList);
-    //     listBuilder(taskList.name, taskList.date);
-    // });
 }
 
 function handleCreateNewList() {
@@ -207,7 +185,7 @@ function handleListInputKeydown(e) {
 
 function handleDateChange(e) {
     if (selectedDate.value !== "" && selectedList.value !== "") {
-        console.log("change")
+        // console.log("change")
         createTaskList();
     }
 }
@@ -253,8 +231,41 @@ function createTaskList() {
     dNoneToggler(ls);
 }
 
-function listBuilder(listName, listDate) {
-    console.log(listName, listDate)
+function listBuilder(taskListOrName, maybeDate) {
+
+    let listName, listDate,tasks;
+
+    // console.log("TaskListOrName: ", taskListOrName)
+    if(typeof taskListOrName ==="object"){
+        listName = taskListOrName.name;
+        listDate = taskListOrName.date;
+        tasks = taskListOrName.tasks || {};
+        console.log(listName)
+        console.log(listDate)
+        console.log(tasks)
+    } else{
+        listName = taskListOrName;
+        listDate = maybeDate;
+        tasks = {};
+        console.log(listName)
+        console.log(listDate)
+    }
+
+    // console.log(taskList.tasks);
+
+
+
+     Object.values(tasks).forEach(task => {
+        // console.log(taskList);           // hela objektet
+        console.log("Task: " + task);
+    });
+
+    
+    console.log("Tasklistnamn: ", listName);
+    console.log(listName)
+    // console.log(obj[listName])
+    // let selectedList = obj;
+    console.log(selectedList)
 
     let list = document.createElement("div");
     list.classList.add("list1");
@@ -270,14 +281,11 @@ function listBuilder(listName, listDate) {
 
     let ul = document.createElement("ul");
     ul.classList.add("taskList");
-
-
     let input = document.createElement("input");
     input.type = "text";
     input.classList.add("taskInput");
     input.placeholder = "Enter Tihi";
     btnCont.appendChild(input);
-
 
     let tskBtn = document.createElement("button");
     tskBtn.innerHTML = "+";
@@ -293,14 +301,18 @@ function listBuilder(listName, listDate) {
     list.appendChild(ul);
     document.querySelector(".list-container").appendChild(list);
     input.focus();
+    // console.log(taskList)
+    
 }
 
 // --- Task Functions ---
 function createTask(event) {
     let inputTask = event.currentTarget.closest(".btnContainer").querySelector(".taskInput");
     const taskList = event.currentTarget.closest(".list1").querySelector(".taskList");
+    let taskListName = event.currentTarget.closest(".list1").querySelector("h2").textContent.split(":")[0];
+    // console.log("TaskListName:", taskListName);
 
-    const li = document.createElement("li");
+    list = document.createElement("li");
     const input = document.createElement("input");
     input.type = "text";
     input.classList.add("miniTask", "noEdit");
@@ -309,7 +321,8 @@ function createTask(event) {
         alert("Ange en uppgift");
         return;
     } else {
-        input.value = inputTask.value;
+        let taskName = inputTask.value
+        input.value = taskName;
         inputTask.value = "";
 
         let chkbox = document.createElement("input");
@@ -344,6 +357,8 @@ function createTask(event) {
         li.appendChild(input);
         li.appendChild(btn);
         taskList.appendChild(li);
+        updateJSON([taskListName, "newTask", taskName, getCurrentList()]);
+        // updateJSON([, "newTask", listName, getCurrentList()]);
     }
 }
 
@@ -368,7 +383,7 @@ function dNoneToggler(data) { data.classList.toggle("d-none"); }
 function closeSettings() { dNoneToggler(ls); selectedDate.value = ""; selectedList.value = ""; }
 function openTaskInput() { dNoneToggler(ls); selectedList.focus(); }
 function getCurrentList() { let listName = listNameH1.textContent; return listName; }
-function clearMain() { console.log("I clearmain"); document.querySelector(".list-container").innerHTML = ""; listNameH1.textContent = ""; }
+function clearMain() { document.querySelector(".list-container").innerHTML = ""; listNameH1.textContent = ""; }
 
 // --- List loading ---
 // --- JSON handling ---
@@ -377,12 +392,14 @@ function saveMainList(updatedList) {
     localStorage.setItem("mainList", JSON.stringify(updatedList));
 }
 
-
 function createJSON() {
     let curJSON = readJSON();
     if (!curJSON) {
         const defaultData = {
-            "Default List": []
+            "Default List": {
+                name: "Default List",
+                taskLists: {}
+            }
         };
         saveMainList(defaultData);
     } //om mainList redan finns, gör inget
@@ -393,17 +410,19 @@ function readJSON() {
     return localStorage.getItem("mainList");
 }
 
+
 function updateJSON(data) {
     let curJSON = readJSON();
     let obj = JSON.parse(curJSON);
-
     if (data[1] === "newList") {
         let listName = data[0];
-
-        let newList = [];
-
+        let newList = {
+            name: listName,
+            taskLists: {
+            }
+        };
         obj[listName] = newList;
-
+        // console.log(obj[listName])
         saveMainList(obj);
         // localStorage.setItem("mainList", JSON.stringify(obj));
     }
@@ -412,29 +431,47 @@ function updateJSON(data) {
         let currentList = data[2];
         let taskDate = data[3];
 
-        console.log("CurrentList:", currentList);
-        console.log("TaskListName:", taskListName);
+        let curList = obj[currentList];
+
+        // console.log("CurrentList:", currentList);
+        // console.log("TaskListName:", taskListName);
 
         const newTaskList = {
             id: crypto.randomUUID(),
             name: taskListName,
             date: taskDate,
-            tasks: []
+            tasks: {}
         };
-
-        obj[currentList].push(newTaskList);
+        curList.taskLists[taskListName] = newTaskList;
+        // obj[taskListName] = newTaskList;
         saveMainList(obj);
-        // localStorage.setItem("mainList", JSON.stringify(obj))
-        console.log("Created task list: ", newTaskList);
-    } else if (data[1] === "newTask") {
-        let taskListName = data[0];
-        let taskName = data[2];
-        let currentList = data[3];
+        // console.log(curList.taskLists[taskListName].tasks)
     }
 
-    //parse json and look for relevant data point
-    // replace said data point
-    // call createJSON || make a new setItem call directly from updateJSON. 
+    else if (data[1] === "newTask") {
+     
+        let curJSON = readJSON();
+        let obj = JSON.parse(curJSON);
+      
+        let taskListName = data[0];
+        let currentList = data[3];
+        let taskName = data[2];
+        
+        let curList = obj[currentList]
+      
+        let newTask = {
+            name: taskName,
+        };
+
+        if(!curList.taskLists[taskListName].tasks){
+            curList.taskLists[taskListName].tasks = {};
+        }
+
+
+        // console.log(curList.taskLists[taskListName])
+        curList.taskLists[taskListName].tasks[newTask.name] = newTask;
+        saveMainList(obj);
+    }
 }
 
 function deleteJSON() {
