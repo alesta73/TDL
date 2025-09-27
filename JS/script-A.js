@@ -10,6 +10,7 @@ const selectedDate = document.getElementById("dateID");
 const createNewListBtn = document.querySelector(".createNewListBtn");
 const listNameH1 = document.querySelector(".listname");
 const listContainer = document.querySelector(".list-container");
+const dateInput = document.querySelector("#dateID");
 
 // --- Initialization ---
 window.onload = resetInputs;
@@ -39,6 +40,7 @@ function initEventListeners() {
     document.addEventListener("keydown", handleTaskInputEnter);
     document.addEventListener("click", handleMiniTaskBlur);
     navList.addEventListener("click", handleNavListClick);
+
 
 }
 
@@ -184,14 +186,7 @@ function handleListInputKeydown(e) {
 }
 
 function handleDateChange(e) {
-    if (selectedDate.value !== "" && selectedList.value !== "") {
-        // console.log("change")
-        createTaskList();
-    }
-}
-
-function createTaskList() {
-    const dateInput = document.querySelector("#dateID");
+    // console.log(selectedList.value);
 
     if (selectedList.value === "") {
         console.log("Ange namn på lista");
@@ -203,6 +198,17 @@ function createTaskList() {
         alert("Ange datum");
         return;
     }
+
+    if (selectedDate.value !== "" && selectedList.value !== "") {
+        console.log("change")
+        createTaskList();
+    }
+}
+
+function createTaskList() {
+    console.log()
+
+
 
     const selected = new Date(dateInput.value);
     const today = new Date();
@@ -232,41 +238,26 @@ function createTaskList() {
 }
 
 function listBuilder(taskListOrName, maybeDate) {
+    console.log("I listbuilder")
 
-    let listName, listDate,tasks;
+    let listName, listDate, tasks;
 
-    // console.log("TaskListOrName: ", taskListOrName)
-    if(typeof taskListOrName ==="object"){
+    if (typeof taskListOrName === "object") {
+        //om task kommer från localstorage
         listName = taskListOrName.name;
         listDate = taskListOrName.date;
         tasks = taskListOrName.tasks || {};
         console.log(listName)
         console.log(listDate)
         console.log(tasks)
-    } else{
+    } else {
+        //om task skapas nu
         listName = taskListOrName;
         listDate = maybeDate;
         tasks = {};
         console.log(listName)
         console.log(listDate)
     }
-
-    // console.log(taskList.tasks);
-
-
-
-     Object.values(tasks).forEach(task => {
-        // console.log(taskList);           // hela objektet
-        console.log("Task: " + task);
-    });
-
-    
-    console.log("Tasklistnamn: ", listName);
-    console.log(listName)
-    // console.log(obj[listName])
-    // let selectedList = obj;
-    console.log(selectedList)
-
     let list = document.createElement("div");
     list.classList.add("list1");
 
@@ -281,6 +272,16 @@ function listBuilder(taskListOrName, maybeDate) {
 
     let ul = document.createElement("ul");
     ul.classList.add("taskList");
+
+
+    Object.values(tasks).forEach(task => {
+        // console.log(taskList);           // hela objektet
+        console.log("---------------------------------------------------------")
+        console.log("Task: ", task);
+        // loadTasksToMain(ul, task)
+        createTask(listName, ul, task);
+    });
+
     let input = document.createElement("input");
     input.type = "text";
     input.classList.add("taskInput");
@@ -290,7 +291,8 @@ function listBuilder(taskListOrName, maybeDate) {
     let tskBtn = document.createElement("button");
     tskBtn.innerHTML = "+";
     tskBtn.classList.add("taskButton");
-    tskBtn.addEventListener("click", createTask);
+    // tskBtn.addEventListener("click", createTask(listName, ul, input));
+    tskBtn.addEventListener("click", () => createTask(listName, ul, input));
     tskBtn.type = "button";
 
     btnCont.appendChild(tskBtn);
@@ -302,28 +304,53 @@ function listBuilder(taskListOrName, maybeDate) {
     document.querySelector(".list-container").appendChild(list);
     input.focus();
     // console.log(taskList)
-    
+
 }
 
 // --- Task Functions ---
-function createTask(event) {
-    let inputTask = event.currentTarget.closest(".btnContainer").querySelector(".taskInput");
-    const taskList = event.currentTarget.closest(".list1").querySelector(".taskList");
-    let taskListName = event.currentTarget.closest(".list1").querySelector("h2").textContent.split(":")[0];
-    // console.log("TaskListName:", taskListName);
 
+
+function loadTasksToMain(ul, task) {
+    console.log("loadtasktomain")
+    let taskName = task.name;
+    console.log(ul);
+    console.log(taskName);
+}
+function createLi(event) {
+    let li = document.createElement("li");
+}
+
+function createTask(listName, ul, inputOrTask){
     const li = document.createElement("li");
     const input = document.createElement("input");
     input.type = "text";
-    input.classList.add("miniTask", "noEdit");
+    input.classList.add("minitask", "noEdit");
 
-    if (inputTask.value === "") {
+    //hämta taskname
+    let taskName = "";
+    if(inputOrTask instanceof HTMLElement){
+        taskName = inputOrTask.value.trim();
+        console.log(taskName);
+    } else if(inputOrTask && typeof inputOrTask === "object" && "name" in inputOrTask){
+        taskName = inputOrTask.name.trim();
+        console.log(taskName);
+    }
+
+    if(!taskName){
+        if(inputOrTask instanceof HTMLElement){
         alert("Ange en uppgift");
-        return;
-    } else {
-        let taskName = inputTask.value
-        input.value = taskName;
-        inputTask.value = "";
+        }
+      return;
+    }
+
+    input.value = taskName;
+
+    if(inputOrTask instanceof(HTMLElement)){
+        console.log("inputortask: ", inputOrTask)
+        inputOrTask.value = "";
+    }
+
+    //UI checkbox och edit knapp: 
 
         let chkbox = document.createElement("input");
         chkbox.type = "checkbox";
@@ -339,7 +366,7 @@ function createTask(event) {
 
         btn.appendChild(span);
 
-        // Edit button handler
+             // Edit button handler
         btn.addEventListener("click", (e) => {
             e.stopPropagation(); // prevent document click from firing
             input.classList.remove("noEdit");
@@ -356,10 +383,9 @@ function createTask(event) {
         li.appendChild(chkbox);
         li.appendChild(input);
         li.appendChild(btn);
-        taskList.appendChild(li);
-        updateJSON([taskListName, "newTask", taskName, getCurrentList()]);
-        // updateJSON([, "newTask", listName, getCurrentList()]);
-    }
+        ul.appendChild(li);
+        updateJSON([listName, "newTask", taskName, getCurrentList()]);
+
 }
 
 function handleTaskInputEnter(event) {
@@ -442,6 +468,7 @@ function updateJSON(data) {
             date: taskDate,
             tasks: {}
         };
+
         curList.taskLists[taskListName] = newTaskList;
         // obj[taskListName] = newTaskList;
         saveMainList(obj);
@@ -449,21 +476,21 @@ function updateJSON(data) {
     }
 
     else if (data[1] === "newTask") {
-     
+
         let curJSON = readJSON();
         let obj = JSON.parse(curJSON);
-      
+
         let taskListName = data[0];
         let currentList = data[3];
         let taskName = data[2];
-        
+
         let curList = obj[currentList]
-      
+
         let newTask = {
             name: taskName,
         };
 
-        if(!curList.taskLists[taskListName].tasks){
+        if (!curList.taskLists[taskListName].tasks) {
             curList.taskLists[taskListName].tasks = {};
         }
 
