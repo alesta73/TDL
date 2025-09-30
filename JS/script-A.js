@@ -122,9 +122,10 @@ function handleCreateNewList() {
     if (sidebar.classList.contains("collapsed")) {
         sidebar.classList.remove("collapsed");
     }
-    let newListInput = document.createElement("input");
-    newListInput.type = "text";
-    newListInput.classList.add("newListInput");
+    // let newListInput = document.createElement("input");
+    // newListInput.type = "text";
+    // newListInput.classList.add("newListInput");
+    // newListInput.maxLength = 20;
 
     let li = document.createElement("li");
     li.classList.add("nav-item");
@@ -140,6 +141,8 @@ function handleCreateNewList() {
     let input = document.createElement("input");
     input.classList.add("newListInput");
     input.type = "text";
+    input.maxLength = 30;
+    input.placeholder = "Max 30 tecken..."
 
     aElement.appendChild(firstSpan);
     aElement.appendChild(input);
@@ -206,10 +209,10 @@ function handleDateChange(e) {
 }
 
 function createTaskList() {
-    console.log()
-
-
-
+    if(dateInput.value == ""){
+        alert("Ange datum");
+        return;
+    }
     const selected = new Date(dateInput.value);
     const today = new Date();
     const tomorrow = new Date();
@@ -226,6 +229,11 @@ function createTaskList() {
         displayDate = "Imorgon";
     } else {
         displayDate = dateInput.value;
+    }
+
+    if(selectedList.value === ""){
+        alert("Ange uppgift");
+        return; 
     }
     let listName = selectedList.value;
     listBuilder(listName, displayDate);

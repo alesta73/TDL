@@ -22,7 +22,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 200px;
+    width: 260px;
     /* width: 10%; */
     height: 100vh;
     background: #151A2E;
@@ -37,6 +37,7 @@ body {
     /* width: 4%; */
     display: flex;
     align-items: center;
+    transition: all 0.4s ease;
  }
 
 /* Sidebar Header */
@@ -90,11 +91,17 @@ body {
 }
 .sidebar-nav .nav-list {
     width: 100%;
-    margin-left: 25px;
-    margin-right: 25px;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
     list-style: none;
     gap: 4px;
     transition: 0.4s ease;
+}
+
+
+.sidebar.collapsed .sidebar-nav .nav-list{
+        margin-left: 25px;
+    margin-right: 25px;
 }
 .sidebar.collapsed .sidebar-nav .primary-nav { transform: translateY(55px); }
 
@@ -108,7 +115,6 @@ body {
     padding: 8px;
     align-items: center;
     border-radius: 8px;
-    transition: 0.4s ease;
     transform: translateY(15px);
     /* width: 100%; */
     justify-content: space-between;
@@ -118,7 +124,13 @@ body {
     background: #EEF2FF;
     color: #151A2E;
 }
-.sidebar-nav .nav-link .nav-label { transition: opacity 0.3s ease; }
+.sidebar-nav .nav-link .nav-label { 
+    display: inline-block;
+    /* background: red; */
+    max-width: 180px;
+    white-space: normal;
+    word-wrap: break-word;
+    transition: opacity 0.3s ease; }
 
 .sidebar.collapsed .nav-link .nav-label {
     display: none;
@@ -298,7 +310,7 @@ main {
     background: #151A2E; /* matchar dina andra knappar */
     color: #EEF2FF;      /* ikon/textfärg */
     width: 32px;
-    height: 32px;
+    aspect-ratio: 1/1;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 14px; /* ikonstorlek */
