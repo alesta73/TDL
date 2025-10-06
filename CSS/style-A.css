@@ -30,6 +30,7 @@ body {
     display: flex;
     flex-direction: column;
     /* justify-content: center; */
+    transition: all 0.4s ease;
 
 }
 .sidebar.collapsed { 
@@ -46,7 +47,6 @@ body {
     position: relative;
     align-items: center;
     padding: 15px 20px;
-    /* padding: 1.5rem; */
     justify-content: space-between;
 }
 .sidebar-header .header-logo img {
@@ -105,7 +105,36 @@ body {
 }
 .sidebar.collapsed .sidebar-nav .primary-nav { transform: translateY(55px); }
 
+.sidebar.collapsed .deleteListBtn{
+    display: none;
+}
 
+.deleteListBtn{
+    display: flex;
+    margin: 0;
+    padding: 0;
+    width: 18px;
+    height: 18px;
+    /* padding: 8px; */
+    color: #F2F3FF;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    /* margin-top: 11.5px; */
+    /* margin-left: 4px; */
+}
+.deleteListBtn:hover{
+    color: red;
+    transition: 0.4s ease;
+}
+
+.nav-item{
+    flex: 1;
+    /* width: 220px; */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
 
 .sidebar-nav .nav-item .nav-link {
     color: #fff;
@@ -115,8 +144,8 @@ body {
     padding: 8px;
     align-items: center;
     border-radius: 8px;
-    transform: translateY(15px);
-    /* width: 100%; */
+    /* transform: translateY(15px); */
+    width: 100%;
     justify-content: space-between;
     margin-top: 10px;
 }
@@ -136,6 +165,11 @@ body {
     display: none;
     opacity: 0;
     pointer-events: none;
+}
+
+.nav-label{
+    white-space: normal;
+    flex: 1;
 }
 
 
@@ -229,10 +263,10 @@ main {
 }
 .taskInput, .miniTask {
     flex: 1;
-    width: 70%;
+    width: 10%;
     padding: 5px;
     border-radius: 8px;
-    margin: auto 10px;
+    margin-right: 10px;
 }
 .taskInput:focus, .miniTask:focus, input:focus { outline: none; }
 .taskButton {
@@ -267,15 +301,57 @@ main {
 /* ---------------------------------------------------
    Task List Items
 --------------------------------------------------- */
+
 .taskList > li {
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
-    padding-left: 10px;
-    /* padding-right: 10px; */
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  transition: all 0.3s ease;
 }
+
+/* Checkbox hidden by default */
+.chkbox {
+  opacity: 0;
+  width: 0;
+  margin-right: 0;
+  visibility: hidden;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+/* Checkbox appears on hover */
+.taskList > li:hover > .chkbox {
+  opacity: 1;
+  width: 20px; /* Adjust to actual checkbox width */
+  margin-right: 8px;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* Text input styling */
+.minitask {
+  flex: 1; /* fill remaining space by default */
+  width: 100%;
+  transition: flex-basis 0.3s ease, transform 0.3s ease;
+}
+
+/* On hover, shrink slightly to make space */
+.taskList > li:hover > .minitask {
+  /* width: 110%; */
+  width: 20px;
+  /* transform: translateX(-4px); */
+}
+
+/* Buttons container remains fixed */
+.editBtnContainer {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+
 .noEdit {
     border: none;
     background: transparent;
@@ -327,6 +403,25 @@ main {
 /* ---------------------------------------------------
    Miscellaneous & Utility
 --------------------------------------------------- */
+
+
+/* .chkbox {
+    opacity: 0;
+    visibility: hidden;
+    display: none;
+    transition: opacity 0.4s ease;
+}
+
+li:hover > .chkbox {
+
+    opacity: 1;
+
+    visibility: visible;
+        display: flex;
+} */
+
+
+
 .material-symbols-outlined {
     font-size: 18px !important;
     line-height: 1;
@@ -344,7 +439,7 @@ main {
     flex-direction: column;
     flex-wrap: wrap;
     position: absolute;
-    top: 20%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;

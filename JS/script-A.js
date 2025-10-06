@@ -88,9 +88,22 @@ function loadListsFromLocalStorage() {
             secondSpan.textContent = listName;
 
 
+            let deleteListBtn = document.createElement("button");
+            deleteListBtn.type = "button;"
+            deleteListBtn.classList.add("deleteListBtn");
+
+            let deleteSpan = document.createElement("span");
+            deleteSpan.classList.add("material-symbols-outlined");
+            deleteSpan.textContent = "close";
+
+
+            deleteListBtn.appendChild(deleteSpan);
+
+
             aElement.appendChild(firstSpan);
             aElement.appendChild(secondSpan);
             li.appendChild(aElement);
+            li.appendChild(deleteListBtn);
             navList.appendChild(li);
         }
     }
@@ -364,15 +377,30 @@ function createTask(listName, ul, inputOrTask){
         chkbox.type = "checkbox";
         chkbox.classList.add("chkbox");
 
+        let editBtnContainer = document.createElement("div");
+        editBtnContainer.classList.add("editBtnContainer");
+
         let btn = document.createElement("button");
         btn.classList.add("edit-task");
         btn.type = "button";
+
+        let editTaskBtn = document.createElement("button");
+        editTaskBtn.classList.add("edit-task");
+        
 
         let span = document.createElement("span");
         span.classList.add("material-symbols-outlined");
         span.innerHTML = "edit";
 
+        let span2 = document.createElement("span");
+        span2.classList.add("material-symbols-outlined");
+        span2.innerHTML = "delete";
+
         btn.appendChild(span);
+        editTaskBtn.appendChild(span2);
+        editBtnContainer.appendChild(btn);
+        editBtnContainer.appendChild(editTaskBtn)
+
 
              // Edit button handler
         btn.addEventListener("click", (e) => {
@@ -390,7 +418,8 @@ function createTask(listName, ul, inputOrTask){
 
         li.appendChild(chkbox);
         li.appendChild(input);
-        li.appendChild(btn);
+        // li.appendChild(btn);
+        li.appendChild(editBtnContainer);
         ul.appendChild(li);
         updateJSON([listName, "newTask", taskName, getCurrentList()]);
 
@@ -509,9 +538,17 @@ function updateJSON(data) {
     }
 }
 
-function deleteJSON() {
+function deleteJSON(data) {
     //take call from updateJSON to delete
     //Recieve obj to delete
     //delete said obj
     //call updateJSON with new list
+    if( data === "list" ){
+
+    } else if( data === "taskList" ){
+
+    } else if( data === "task" ){
+
+    }
+
 }
