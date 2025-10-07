@@ -383,14 +383,14 @@ main {
     justify-content: center;
     border-radius: 50%;
     border: none;
-    background: #151A2E; /* matchar dina andra knappar */
-    color: #EEF2FF;      /* ikon/textfärg */
+    background: #151A2E; 
+    color: #EEF2FF;      
     width: 32px;
     aspect-ratio: 1/1;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 14px; /* ikonstorlek */
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* subtil skugga så den inte försvinner i bakgrunden */
+    font-size: 14px; 
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2); 
 }
 
 .edit-task:hover {

@@ -96,7 +96,8 @@ function loadListsFromLocalStorage() {
             deleteSpan.classList.add("material-symbols-outlined");
             deleteSpan.textContent = "close";
 
-
+            console.log(listName);
+            deleteListBtn.addEventListener("click", (e)=> deleteJSON(e, "list"));
             deleteListBtn.appendChild(deleteSpan);
 
 
@@ -380,12 +381,12 @@ function createTask(listName, ul, inputOrTask){
         let editBtnContainer = document.createElement("div");
         editBtnContainer.classList.add("editBtnContainer");
 
-        let btn = document.createElement("button");
-        btn.classList.add("edit-task");
-        btn.type = "button";
+        let deleteTaskBtn = document.createElement("button");
+        deleteTaskBtn.classList.add("edit-task", "deleteTaskBtn");
+        deleteTaskBtn.type = "button";
 
-        let editTaskBtn = document.createElement("button");
-        editTaskBtn.classList.add("edit-task");
+        // let editTaskBtn = document.createElement("button");
+        // editTaskBtn.classList.add("edit-task");
         
 
         let span = document.createElement("span");
@@ -396,14 +397,14 @@ function createTask(listName, ul, inputOrTask){
         span2.classList.add("material-symbols-outlined");
         span2.innerHTML = "delete";
 
-        btn.appendChild(span);
-        editTaskBtn.appendChild(span2);
-        editBtnContainer.appendChild(btn);
-        editBtnContainer.appendChild(editTaskBtn)
+        // btn.appendChild(span);
+        deleteTaskBtn.appendChild(span2);
+        editBtnContainer.appendChild(deleteTaskBtn);
+        // editBtnContainer.appendChild(editTaskBtn)
 
 
              // Edit button handler
-        btn.addEventListener("click", (e) => {
+            deleteTaskBtn.addEventListener("click", (e) => {
             e.stopPropagation(); // prevent document click from firing
             input.classList.remove("noEdit");
             input.focus();
@@ -422,7 +423,6 @@ function createTask(listName, ul, inputOrTask){
         li.appendChild(editBtnContainer);
         ul.appendChild(li);
         updateJSON([listName, "newTask", taskName, getCurrentList()]);
-
 }
 
 function handleTaskInputEnter(event) {
@@ -433,6 +433,7 @@ function handleTaskInputEnter(event) {
         if (button) button.click();
     }
 }
+
 function handleMiniTaskBlur(e) {
     const activeInput = document.querySelector("input.miniTask:not(.noEdit)");
     if (activeInput && e.target !== activeInput && !e.target.closest(".edit-task")) {
@@ -538,17 +539,22 @@ function updateJSON(data) {
     }
 }
 
-function deleteJSON(data) {
+function deleteJSON(event, data) {
+    let listName = event.currentTarget.closest(".nav-item");
+    let labelText = listName.querySelector(".nav-label")?.textContent.trim();
+    console.log(labelText);
+    console.log(event.currentTarget.closest(".nav-item"))
+    console.log("deleteJSON")
+    console.log(data)
     //take call from updateJSON to delete
     //Recieve obj to delete
     //delete said obj
     //call updateJSON with new list
     if( data === "list" ){
-
+        console.log("Delete list");
     } else if( data === "taskList" ){
 
     } else if( data === "task" ){
 
     }
-
 }
