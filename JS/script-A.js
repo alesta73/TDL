@@ -372,7 +372,7 @@ function createTask(listName, ul, inputOrTask) {
     const li = document.createElement("li");
     const input = document.createElement("input");
     input.type = "text";
-    input.classList.add("minitask", "noEdit");
+    input.classList.add("minitask");//"noEdit"
 
     //hämta taskname
     let taskName = "";
@@ -408,7 +408,7 @@ function createTask(listName, ul, inputOrTask) {
     editBtnContainer.classList.add("editBtnContainer");
 
     let deleteTaskBtn = document.createElement("button");
-    deleteTaskBtn.classList.add("edit-task", "deleteTaskBtn");
+    deleteTaskBtn.classList.add("deleteTaskBtn"); //"edit-task"
     deleteTaskBtn.type = "button";
 
     // let editTaskBtn = document.createElement("button");
@@ -429,12 +429,14 @@ function createTask(listName, ul, inputOrTask) {
     // editBtnContainer.appendChild(editTaskBtn)
 
 
-    // Edit button handler
-    deleteTaskBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // prevent document click from firing
-        input.classList.remove("noEdit");
-        input.focus();
-    });
+    // DeleteTaskbutton handler
+    deleteTaskBtn.addEventListener("click", (e) => deleteJSON(e, ["task", listName, taskName]));
+
+    // deleteTaskBtn.addEventListener("click", (e) => {
+    //     e.stopPropagation(); // prevent document click from firing
+    //     input.classList.remove("noEdit");
+    //     input.focus();
+    // });
 
     // Enter to lock input
     input.addEventListener("keydown", (e) => {
@@ -446,7 +448,8 @@ function createTask(listName, ul, inputOrTask) {
     li.appendChild(chkbox);
     li.appendChild(input);
     // li.appendChild(btn);
-    li.appendChild(editBtnContainer);
+    // li.appendChild(editBtnContainer);
+    li.appendChild(deleteTaskBtn)
     ul.appendChild(li);
     updateJSON([listName, "newTask", taskName, getCurrentList()]);
 }
@@ -576,7 +579,7 @@ function deleteJSON(event, data) {
     if (data[0] === "list") {
         let listName = data[1];
         // let listName = event.currentTarget.closest(".nav-item");
-         //let labelText = listName.querySelector(".nav-label")?.textContent.trim();
+        //let labelText = listName.querySelector(".nav-label")?.textContent.trim();
         
         let closestLi = event.currentTarget.closest("li");
         console.log(closestLi);
@@ -596,20 +599,39 @@ function deleteJSON(event, data) {
         }
     } 
     else if (data[0] === "taskList") {
+        let curListName = getCurrentList();
+        
+        // console.log("SelectedList: ", curListName);
         let listName = data[1];
+        console.log("Data: ", data)
+        console.log("Obj: ", obj)
         console.log(listName)
         console.log("i taskList")
+        console.log(obj[curListName].taskLists[listName])
+
+
         //console.log(event.currentTarget)
         let taskListDiv = event.currentTarget.closest(".taskListDiv");
+        taskListDiv.remove();
         // let taskListName = taskListDiv.querySelector("h2")?.textContent.trim().split(":")[0].trim();
 
         // console.log(taskListDiv)
         // console.log(taskListName);   
-        console.log(obj[listName]);
-        delete obj[listName];
+        // console.log(obj[listName]);
+        delete obj[curListName].taskLists[listName];
         saveMainList(obj);
 
-    } else if (data === "task") {
-        console.log("i task")
+    } else if (data[0] === "task") {
+        console.log(data);
+        let curListName = getCurrentList();
+        let listName = data[1];
+        let taskName = data[2];
+
+        let taskLi = event.currentTarget.closest("li");
+        console.log(taskLi)
+        console.log(obj[curListName].taskLists[listName].tasks[taskName]);
+        taskLi.remove();
+        delete(obj[curListName].taskLists[listName].tasks[taskName]);
+        saveMainList(obj);
     }
 }

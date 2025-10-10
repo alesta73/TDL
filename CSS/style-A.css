@@ -33,13 +33,14 @@ body {
     transition: all 0.4s ease;
 
 }
-.sidebar.collapsed { 
+
+.sidebar.collapsed {
     width: 84px;
     /* width: 4%; */
     display: flex;
     align-items: center;
     transition: all 0.4s ease;
- }
+}
 
 /* Sidebar Header */
 .sidebar .sidebar-header {
@@ -49,6 +50,7 @@ body {
     padding: 15px 20px;
     justify-content: space-between;
 }
+
 .sidebar-header .header-logo img {
     height: 46px;
     width: 46px;
@@ -56,6 +58,7 @@ body {
     object-fit: contain;
     border-radius: 50%;
 }
+
 .sidebar-header .sidebar-toggler {
     position: absolute;
     right: 25px;
@@ -72,10 +75,23 @@ body {
     margin: 0;
     padding: 0;
 }
-.sidebar-header .sidebar-toggler:hover { background: #d9e1fd; }
-.sidebar.collapsed .sidebar-toggler { transform: translateY(65px); }
-.sidebar-header .sidebar-toggler span { font-size: 1.75rem; transition: 0.4s ease; }
-.sidebar.collapsed .sidebar-toggler span { transform: rotate(180deg); }
+
+.sidebar-header .sidebar-toggler:hover {
+    background: #d9e1fd;
+}
+
+.sidebar.collapsed .sidebar-toggler {
+    transform: translateY(65px);
+}
+
+.sidebar-header .sidebar-toggler span {
+    font-size: 1.75rem;
+    transition: 0.4s ease;
+}
+
+.sidebar.collapsed .sidebar-toggler span {
+    transform: rotate(180deg);
+}
 
 /* Sidebar Navigation */
 
@@ -89,6 +105,7 @@ body {
     width: 100%;
 
 }
+
 .sidebar-nav .nav-list {
     width: 100%;
     margin-left: 0.5rem;
@@ -99,17 +116,20 @@ body {
 }
 
 
-.sidebar.collapsed .sidebar-nav .nav-list{
-        margin-left: 25px;
+.sidebar.collapsed .sidebar-nav .nav-list {
+    margin-left: 25px;
     margin-right: 25px;
 }
-.sidebar.collapsed .sidebar-nav .primary-nav { transform: translateY(55px); }
 
-.sidebar.collapsed .deleteListBtn{
+.sidebar.collapsed .sidebar-nav .primary-nav {
+    transform: translateY(55px);
+}
+
+.sidebar.collapsed .deleteListBtn {
     display: none;
 }
 
-.deleteListBtn{
+.deleteListBtn {
     display: flex;
     margin: 0;
     padding: 0;
@@ -123,12 +143,13 @@ body {
     /* margin-top: 11.5px; */
     /* margin-left: 4px; */
 }
-.deleteListBtn:hover{
+
+.deleteListBtn:hover {
     color: red;
     transition: 0.4s ease;
 }
 
-.nav-item{
+.nav-item {
     flex: 1;
     /* width: 220px; */
     align-items: center;
@@ -149,17 +170,20 @@ body {
     justify-content: space-between;
     margin-top: 10px;
 }
-.sidebar-nav .nav-item:hover > .nav-link {
+
+.sidebar-nav .nav-item:hover>.nav-link {
     background: #EEF2FF;
     color: #151A2E;
 }
-.sidebar-nav .nav-link .nav-label { 
+
+.sidebar-nav .nav-link .nav-label {
     display: inline-block;
     /* background: red; */
     max-width: 180px;
     white-space: normal;
     word-wrap: break-word;
-    transition: opacity 0.3s ease; }
+    transition: opacity 0.3s ease;
+}
 
 .sidebar.collapsed .nav-link .nav-label {
     display: none;
@@ -167,7 +191,7 @@ body {
     pointer-events: none;
 }
 
-.nav-label{
+.nav-label {
     white-space: normal;
     flex: 1;
 }
@@ -185,6 +209,7 @@ body {
     align-items: center;
     padding: 0 30px;
 }
+
 .acc {
     display: flex;
     height: 50%;
@@ -197,6 +222,7 @@ body {
     cursor: pointer;
     transition: 0.4s ease;
 }
+
 .acc:hover {
     background-color: #d9e1fd;
     color: #151A2E;
@@ -211,20 +237,23 @@ main {
     height: 100%;
     padding: 1.75rem;
 }
+
 .main-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     /* padding: 20px 30px; */
 }
+
 .main-content {
     display: flex;
 }
+
 .list-container {
     display: flex;
     gap: 20px;
     /* flex-direction: column; */
-    flex-wrap:wrap;
+    flex-wrap: wrap;
 }
 
 /* ---------------------------------------------------
@@ -237,17 +266,17 @@ main {
     margin-right: 10px;
     padding: 10px;
     border: 2px solid #b1badf;
-    height: auto;
+    height: fit-content;
     /* width: 300px; */
     max-width: 300px;
     /* min-width: 250px; */
     border-radius: 16px;
     /* background: linear-gradient(#b0cbf0, #cacaff); */
     background: #b0cbf0;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.deleteTaskListBtn{
+.deleteTaskListBtn {
     display: flex;
     margin: 0;
     padding: 0;
@@ -260,14 +289,15 @@ main {
     cursor: pointer;
 }
 
-.deleteListBtn:hover{
+.deleteListBtn:hover {
     color: red;
 }
 
-.taskListDiv >h2{
+.taskListDiv>h2 {
     width: 200px;
     flex-direction: column;
 }
+
 .line {
     width: 100%;
     height: 0;
@@ -285,14 +315,22 @@ main {
     width: 100%;
     height: 35px;
 }
-.taskInput, .miniTask {
+
+.taskInput,
+.miniTask {
     flex: 1;
     width: 10%;
     padding: 5px;
     border-radius: 8px;
     margin-right: 10px;
 }
-.taskInput:focus, .miniTask:focus, input:focus { outline: none; }
+
+.taskInput:focus,
+.miniTask:focus,
+input:focus {
+    outline: none;
+}
+
 .taskButton {
     border: none;
     background: #151A2E;
@@ -302,6 +340,7 @@ main {
     height: 32px;
     aspect-ratio: 1/1;
 }
+
 .addtask {
     display: flex;
     align-items: center;
@@ -314,10 +353,13 @@ main {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
-.addtask:hover, .taskButton:hover {
+
+.addtask:hover,
+.taskButton:hover {
     /* background-color: #d9e1fd; */
     /* color: #151A2E; */
-    background: #2a3356; /* lite ljusare/djupare blå vid hover */
+    background: #2a3356;
+    /* lite ljusare/djupare blå vid hover */
 
     transition: 0.4s ease;
 }
@@ -326,54 +368,92 @@ main {
    Task List Items
 --------------------------------------------------- */
 
-.taskList > li {
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 10px;
-  transition: all 0.3s ease;
+.taskList>li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    transition: all 0.3s ease;
 }
 
 /* Checkbox hidden by default */
 .chkbox {
-  opacity: 0;
-  width: 0;
-  margin-right: 0;
-  visibility: hidden;
-  transform: translateX(-10px);
-  transition: all 0.3s ease;
+    opacity: 0;
+    width: 0;
+    margin-right: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
 }
 
 /* Checkbox appears on hover */
-.taskList > li:hover > .chkbox {
-  opacity: 1;
-  width: 20px; /* Adjust to actual checkbox width */
-  margin-right: 8px;
-  visibility: visible;
-  transform: translateX(0);
+.taskList>li:hover>.chkbox {
+    opacity: 1;
+    width: 20px;
+    /* Adjust to actual checkbox width */
+    margin-right: 8px;
+    visibility: visible;
+    transform: translateX(0);
 }
+
+.taskList>li:hover>.minitask {
+    width: 200px;
+    /* color: red; */
+    /* transform: translateX(-4px); */
+}
+
 
 /* Text input styling */
 .minitask {
-  flex: 1; /* fill remaining space by default */
-  width: 100%;
-  transition: flex-basis 0.3s ease, transform 0.3s ease;
+    padding: 5px;
+    flex: 1;
+    /* fill remaining space by default */
+    width: 244px;
+    /* transition: flex-basis 0.3s ease, transform 0.3s ease; */
+    transition: all 0.3s ease;
+    border-radius: 8px;
 }
 
 /* On hover, shrink slightly to make space */
-.taskList > li:hover > .minitask {
-  /* width: 110%; */
-  width: 20px;
-  /* transform: translateX(-4px); */
-}
+
+
 
 /* Buttons container remains fixed */
 .editBtnContainer {
-  display: flex;
-  gap: 5px;
-  align-items: center;
+    /* display: flex; */
+    /* width: 100%; */
+    /* gap: 5px; */
+    /* align-items: flex-end; */
+    /* position: relative; */
+    /* right: 0; */
+
 }
+
+.deleteTaskBtn {
+    /* transition: all 0.3s ease; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: none;
+    background: #151A2E;
+    color: #EEF2FF;
+    width: 32px;
+    aspect-ratio: 1/1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    margin-left: 10px;
+    position: relative;
+}
+
+.taskList>li:hover>.editBtnContainer>.deleteTaskBtn {
+    /* left: 15px; */
+    /* color: red !important; */
+}
+
 
 
 .noEdit {
@@ -381,7 +461,11 @@ main {
     background: transparent;
     pointer-events: none;
 }
-.noEdit:focus { outline: 2px solid black; }
+
+.noEdit:focus {
+    outline: 2px solid black;
+}
+
 /* .edit-task {
     display: flex;
     align-items: center;
@@ -407,19 +491,21 @@ main {
     justify-content: center;
     border-radius: 50%;
     border: none;
-    background: #151A2E; 
-    color: #EEF2FF;      
+    background: #151A2E;
+    color: #EEF2FF;
     width: 32px;
     aspect-ratio: 1/1;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-size: 14px; 
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2); 
+    font-size: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .edit-task:hover {
-    background: #2a3356; /* lite ljusare/djupare blå vid hover */
-    transform: scale(1.1); /* liten animation */
+    background: #2a3356;
+    /* lite ljusare/djupare blå vid hover */
+    transform: scale(1.1);
+    /* liten animation */
 }
 
 
@@ -450,9 +536,19 @@ li:hover > .chkbox {
     font-size: 18px !important;
     line-height: 1;
 }
-.d-none { display: none !important; }
-.dateLabel { text-shadow: 1px 1px lightgray; }
-.exitBtnContainer { display: flex; justify-content: space-between; }
+
+.d-none {
+    display: none !important;
+}
+
+.dateLabel {
+    text-shadow: 1px 1px lightgray;
+}
+
+.exitBtnContainer {
+    display: flex;
+    justify-content: space-between;
+}
 
 /* ---------------------------------------------------
    List Settings Modal
@@ -475,11 +571,13 @@ li:hover > .chkbox {
     border: 1px solid rgba(255, 255, 255, 0.18);
     z-index: 10;
 }
+
 .closeListSettings {
     border: none;
     background: transparent;
     cursor: pointer;
 }
+
 .closeListSettings:hover {
     color: red;
     transition: 0.4s ease;
@@ -488,11 +586,13 @@ li:hover > .chkbox {
 /* ---------------------------------------------------
    Forms & Inputs
 --------------------------------------------------- */
-#dateID, .listNameInput {
+#dateID,
+.listNameInput {
     padding: 5px;
     border-radius: 0.5rem;
     margin: 10px 0;
 }
+
 .addTaskBtn {
     padding: 8px 12px;
     border-radius: 8px;
@@ -501,7 +601,11 @@ li:hover > .chkbox {
     color: #EEF2FF;
     cursor: pointer;
 }
-.createNewListBtn { background: #53AC53; }
+
+.createNewListBtn {
+    background: #53AC53;
+}
+
 .newListInput {
     display: flex;
     padding: 5px;
@@ -511,4 +615,3 @@ li:hover > .chkbox {
     width: 100%;
     justify-content: flex-end;
 }
-
