@@ -40,8 +40,6 @@ function initEventListeners() {
     document.addEventListener("keydown", handleTaskInputEnter);
     document.addEventListener("click", handleMiniTaskBlur);
     navList.addEventListener("click", handleNavListClick);
-
-
 }
 
 // --- Sidebar Functions ---
@@ -136,10 +134,6 @@ function handleCreateNewList() {
     if (sidebar.classList.contains("collapsed")) {
         sidebar.classList.remove("collapsed");
     }
-    // let newListInput = document.createElement("input");
-    // newListInput.type = "text";
-    // newListInput.classList.add("newListInput");
-    // newListInput.maxLength = 20;
 
     let li = document.createElement("li");
     li.classList.add("nav-item");
@@ -363,9 +357,6 @@ function loadTasksToMain(ul, task) {
     let taskName = task.name;
     console.log(ul);
     console.log(taskName);
-}
-function createLi(event) {
-    let li = document.createElement("li");
 }
 
 function createTask(listName, ul, inputOrTask) {
