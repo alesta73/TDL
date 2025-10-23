@@ -14,8 +14,17 @@ export const view = {
     listContainer: document.querySelector(".list-container"),
     dateInput: document.querySelector("#dateID"),
     sidebarToggler: document.querySelector(".sidebar-toggler"),
+    testing: document.querySelector(".testing"),
+    clickable: document.querySelector(".clickable"),
   },
 
+
+  colorChanger(){
+    console.log("Color changer");
+    const {clickable } = this.els;
+    if(!clickable.style.background == "red") clickable.background = "red";
+    else this.els.clickable.style.background ="blue";
+  },
   resetInputs() {
     const { selectedList, selectedDate } = this.els;
     if (selectedList) selectedList.value = "";
@@ -202,7 +211,9 @@ renderNewListInput() {
   },
 
   // Small UI helpers
-  toggleSidebar() { this.els.sidebar.classList.toggle("collapsed"); },
+  toggleSidebar() { this.els.sidebar.classList.toggle("collapsed");
+    console.log("toggleSIdebar")
+   },
   closeSettings() {
     this.els.ls.classList.toggle("d-none");
     this.els.selectedDate.value = "";

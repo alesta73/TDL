@@ -139,9 +139,6 @@ function handleCreateNewList() {
   });
 }
 
-
-
-
 function createTaskList() {
   const { selectedList, dateInput, listNameH1 } = view.els;
   if (!dateInput.value) { alert("Ange datum"); return; }
@@ -183,12 +180,15 @@ function createTaskList() {
 
 // ------- App init & listeners -------
 function init() {
+  console.log(view.els.clickable)
+  view.els.clickable.addEventListener("click", view.colorChanger);
   model.ensureBootstrapped();
   view.resetInputs();
 
   // Sidebar toggling
   view.els.sidebarToggler.addEventListener("click", () => view.toggleSidebar());
   document.addEventListener("click", (e) => {
+    // console.log(e.target)
     if (!view.els.sidebar.contains(e.target)) view.els.sidebar.classList.add("collapsed");
   });
 
@@ -219,6 +219,10 @@ function init() {
 
   // Load sidebar from storage
   const data = model.getLists();
+  //object inbyggd funktion i js. Object.keys hämtar alla 
+  //property namn i objektet "data" och visar upp dom som en array
+  //detta kan uppvisas med: 
+  console.log(Object.keys(data));
   Object.keys(data).forEach(listName => {
     const { link, deleteBtn, li } = view.renderSidebarList(listName);
 

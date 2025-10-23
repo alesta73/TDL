@@ -15,6 +15,23 @@ body {
     background: linear-gradient(#F2F3FF, #CBD4FF);
 }
 
+
+/* Testing: */
+
+.testing{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    padding: 1.5em;
+}
+
+.clickable{
+    background:#53AC53;
+    padding: 0.5em;
+    border-radius: 8px;
+    color: white;
+}
+
 /* ---------------------------------------------------
    Sidebar
 --------------------------------------------------- */
