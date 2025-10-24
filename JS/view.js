@@ -19,12 +19,32 @@ export const view = {
   },
 
 
-  colorChanger(){
-    console.log("Color changer");
-    const {clickable } = this.els;
-    if(!clickable.style.background == "red") clickable.background = "red";
-    else this.els.clickable.style.background ="blue";
-  },
+  // colorChanger(){
+  //   console.log("Color changer");
+  //   const {clickable } = this.els;
+  //   if(clickable.style.background !== "red"){
+  //     clickable.style.background ="red";
+  //   } else{
+  //     clickable.style.background ="blue";
+  //   }
+    
+  // },
+
+  // createBtn(){
+  //   const btn = document.createElement("button");
+  //   btn.classList.add("clickable");
+  //   const input = document.createElement("input");
+  //   input.type = "text";
+  //   input.placeholder = "Click me to change color";
+  //   btn.appendChild(input);
+  //   document.body.appendChild(btn);
+  //   return {btn, input};
+  // },
+
+  // appendEls(element){
+  //   this.els.testing.appendChild(element);
+  // },
+
   resetInputs() {
     const { selectedList, selectedDate } = this.els;
     if (selectedList) selectedList.value = "";

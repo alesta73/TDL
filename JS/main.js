@@ -180,8 +180,12 @@ function createTaskList() {
 
 // ------- App init & listeners -------
 function init() {
-  console.log(view.els.clickable)
-  view.els.clickable.addEventListener("click", view.colorChanger);
+  // console.log(view.els.clickable)
+  // const {btn, input} = view.createBtn();
+  // btn.addEventListener("click", ()=> view.colorChanger());
+  // view.appendEls(btn);
+  // view.appendEls(input);
+  // view.els.clickable.addEventListener("click", ()=> view.colorChanger());
   model.ensureBootstrapped();
   view.resetInputs();
 
