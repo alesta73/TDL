@@ -256,27 +256,33 @@ body {
    Main Layout
 --------------------------------------------------- */
 main {
-    margin-left: 85px;
+    /* margin-left: 85px; */
     height: 100%;
-    padding: 1.75rem;
+    /* padding: 1.75rem; */
+}
+
+.main-content{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 }
 
 .main-header {
+    width: 100%;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     /* padding: 20px 30px; */
 }
 
-.main-content {
-    display: flex;
-}
 
 .list-container {
     display: flex;
-    gap: 20px;
+    gap: 0.5em;
     /* flex-direction: column; */
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 /* ---------------------------------------------------
