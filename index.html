@@ -14,11 +14,11 @@
 </head>
 
 <body>
-        <header class="topbar">
+    <header class="topbar">
         <!-- <div class="logo"></div> -->
         <div class="acc">A</div>
     </header>
-    
+
     <aside class="sidebar collapsed">
         <header class="sidebar-header">
             <a href="#" class="header-logo">
@@ -33,7 +33,7 @@
         <nav class="sidebar-nav">
             <!-- List nav -->
             <ul class="nav-list primary-nav">
-                
+
                 <li class="nav-item">
                     <a href="#" class="nav-link createNewListBtn">
                         <span class="material-symbols-outlined">add</span>
@@ -44,58 +44,42 @@
         </nav>
     </aside>
     <main>
-        <div class="container main-content">
-<div class="main-header">
-            <a>
-                <h1 class="listname">Lista #1</h1>
-            </a>
-        </div>
-        <div class="main-content">
-            <div class="list-container">
-
-                <!-- <div class="list1">
-                    <h2>Idag / Datum</h2>
-<div class="line"></div>
-                    <div class="taskContainer">Käka mat</div>
-                    <div class="btnContainer"> <button class="taskButton">+</button></div>
-                   
-                </div> -->
+        <div class="container">
+            <div class="main-header">
+                <a>
+                    <h1 class="listname">Lista #1</h1>
+                </a>
+                <button class="addtask">
+                    <span>Skapa lista...</span>
+                </button>
             </div>
-            <button class="addtask">
-                <span>Skapa lista...</span>
-                <!-- <span class="material-symbols-outlined">add</span></button> -->
-        </div>
+            <div class="main-content">
+                <div class="list-container">
+                </div>
+                <div class="listSettings d-none">
+                    <div class="exitBtnContainer">
+                        <label for="dateID" class="dateLabel">Välj datum för lista</label>
 
-        <div class="listSettings d-none">
-
-            <div class="exitBtnContainer">
-                <label for="dateID" class="dateLabel">Välj datum för lista</label>
-                            
-                <button type="button" class="closeListSettings">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span></button>
-            </div>
-            <input type="text" class="col-item listNameInput" id="listNameID" placeholder="Namn på lista">    
-            <input type="date" class="col-item" id="dateID" placeholder="Date">
-            <br>
-            <!-- <label for="taskID" class="col-item">Task</label>
+                        <button type="button" class="closeListSettings">
+                            <span class="material-symbols-outlined">
+                                close
+                            </span>
+                        </button>
+                    </div>
+                    <input type="text" class="col-item listNameInput" id="listNameID" placeholder="Namn på lista">
+                    <input type="date" class="col-item" id="dateID" placeholder="Date">
+                    <br>
+                    <!-- <label for="taskID" class="col-item">Task</label>
             <input type="text" class="col-item" id="taskID"> -->
-            <button class="addTaskBtn">Create Task</button>
-        </div>
-
-        </div>
-        
-
-        <!-- <div class="testing">
+                    <button class="addTaskBtn">Create Task</button>
+                </div>
+            </div>
+            <!-- <div class="testing">
             <div class="clickable">Clickable element</div>
         </div> -->
     </main>
-    <div class="container">
-        test <hr> test <hr> test 
-    </div>
+   
     <footer></footer>
-
     <script type="module" src="JS/main.js"></script>
     <!-- <script src="JS/script-A.js"></script> -->
 </body>

@@ -7,6 +7,7 @@ export const view = {
     closeListSettings: document.querySelector(".closeListSettings"),
     sidebar: document.querySelector(".sidebar"),
     navList: document.querySelector(".nav-list"),
+    navLink: document.querySelector(".nav-link"),
     selectedList: document.getElementById("listNameID"),
     selectedDate: document.getElementById("dateID"),
     createNewListBtn: document.querySelector(".createNewListBtn"),

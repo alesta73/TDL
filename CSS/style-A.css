@@ -13,6 +13,7 @@
 body {
     min-height: 100vh;
     background: linear-gradient(#F2F3FF, #CBD4FF);
+    padding-left: 85px;
 }
 
 
@@ -41,19 +42,16 @@ body {
     top: 0;
     left: 0;
     width: 260px;
-    /* width: 10%; */
     height: 100vh;
     background: #151A2E;
     transition: all 0.4s ease;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
-    transition: all 0.4s ease;
-
+    z-index: 100;
 }
 
 .sidebar.collapsed {
-    width: 84px;
+    width: 85px;
     /* width: 4%; */
     display: flex;
     /* align-items: center; */
@@ -256,16 +254,9 @@ body {
    Main Layout
 --------------------------------------------------- */
 main {
-    /* margin-left: 85px; */
     height: 100%;
-    /* padding: 1.75rem; */
 }
 
-.main-content{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-}
 
 .main-header {
     width: 100%;
@@ -277,35 +268,39 @@ main {
 }
 
 
-.list-container {
-    display: flex;
-    gap: 0.5em;
-    /* flex-direction: column; */
-    flex-wrap: wrap;
-    justify-content: center;
+
+
+.list-container{
+    column-count: 1;
+    /* column-gap: 0.75rem; */
 }
+
+
+
 
 /* ---------------------------------------------------
    List & Task Cards
 --------------------------------------------------- */
+
 .taskListDiv {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-right: 10px;
-    padding: 10px;
+    break-inside: avoid;
+    display: inline-block;
+    width: 100%;
+    margin: 0 0 0.75rem;
+    box-sizing: border-box;
     border: 2px solid #b1badf;
-    height: fit-content;
-    /* width: 300px; */
-    max-width: 300px;
-    /* min-width: 250px; */
     border-radius: 16px;
-    /* background: linear-gradient(#b0cbf0, #cacaff); */
     background: #b0cbf0;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    position: relative; 
 }
 
+
 .deleteTaskListBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
     display: flex;
     margin: 0;
     padding: 0;
@@ -317,9 +312,13 @@ main {
     background: transparent;
     cursor: pointer;
 }
-
+.deleteTaskListBtn:hover{
+    color: red;
+    transition: 0.4s ease;
+}
 .deleteListBtn:hover {
     color: red;
+    transition: 0.4s ease;
 }
 
 .taskListDiv>h2 {

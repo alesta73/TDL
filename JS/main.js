@@ -193,8 +193,10 @@ function init() {
   view.els.sidebarToggler.addEventListener("click", () => view.toggleSidebar());
   document.addEventListener("click", (e) => {
     // console.log(e.target)
-    if (!view.els.sidebar.contains(e.target)) view.els.sidebar.classList.add("collapsed");
+    if (!view.els.sidebar.contains(e.target) || view.els.navLink.contains(e.target)) view.els.sidebar.classList.add("collapsed");
   });
+
+  view.els.createNewListBtn.addEventListener("click", () => { view.toggleSidebar(); });
 
   // Top buttons
   view.els.createNewListBtn.addEventListener("click", handleCreateNewList);
