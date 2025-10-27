@@ -96,7 +96,16 @@ function handleCreateNewList() {
 
   // När användaren trycker Enter
   input.addEventListener("keydown", (e) => {
+    
     if (e.key === "Enter") {
+      const obj = model.getLists();
+
+      for(const key in obj){
+          if(input.value === key){
+            alert("Lista finns redan med samma namn");
+            return;
+          }
+      };
       const listName = input.value.trim();
       if (!listName) {
         view.showAlert("Ange namn på lista");
@@ -193,7 +202,11 @@ function init() {
   view.els.sidebarToggler.addEventListener("click", () => view.toggleSidebar());
   document.addEventListener("click", (e) => {
     // console.log(e.target)
-    if (!view.els.sidebar.contains(e.target) || view.els.navLink.contains(e.target)) view.els.sidebar.classList.add("collapsed");
+    if (!view.els.sidebar.contains(e.target) && !view.els.navLink.contains(e.target)){
+      console.log(e.target);
+view.els.sidebar.classList.add("collapsed");
+
+    } 
   });
 
   view.els.createNewListBtn.addEventListener("click", () => { view.toggleSidebar(); });

@@ -1,0 +1,291 @@
+/* =========================================
+   Base CSS — Alexander's Default CSS
+   Purpose: Provide a consistent, scalable 
+   foundation for all web projects
+   ========================================= */
+
+/* Color Tokens Summary:
+   Accent: var(--color-accent)
+   Background: var(--color-bg)
+   Surface: var(--color-surface)
+   Text: var(--color-text)
+   Border: var(--color-border)
+*/
+
+/* 1. Normalize & Global Box Model */
+*, *::before, *::after {
+  /* color: red; */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. Root Design Tokens */
+:root {
+  /* =======================
+     Typography
+     ======================= */
+  --font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --font-family-mono: "JetBrains Mono", "Fira Code", Menlo, monospace;
+  --font-size-base: 16px;
+  --line-height-base: 1.5;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  /* =======================
+     Spacing Scale (8px grid)
+     ======================= */
+  --space-1: 0.25rem; /* 4px */
+  --space-2: 0.5rem;  /* 8px */
+  --space-3: 0.75rem; /* 12px */
+  --space-4: 1rem;    /* 16px */
+  --space-5: 1.5rem;  /* 24px */
+  --space-6: 2rem;    /* 32px */
+
+  /* =======================
+     Z-index Scale
+     ======================= */
+  --z-low: 10;
+  --z-mid: 100;
+  --z-high: 1000;
+  --z-modal: 10000;
+
+  /* =======================
+     Color Palette — Light Mode
+     ======================= */
+  --neutral-50: #fafafa;
+  --neutral-100: #f4f4f5;
+  --neutral-200: #e4e4e7;
+  --neutral-300: #d4d4d8;
+  --neutral-400: #a1a1aa;
+  --neutral-500: #71717a;
+  --neutral-600: #52525b;
+  --neutral-700: #3f3f46;
+  --neutral-800: #27272a;
+  --neutral-900: #18181b;
+
+  --color-bg: #ffffff;
+  --color-bg-alt: #f7f7f8;
+  --color-surface: #eaeaec;
+  --color-surface-light: #eaeaec;
+  --color-surface-dark: #222; 
+  --color-text: #1b1b1d;
+  --color-text-muted: #55575c;
+  --color-text-reverse: #e0e0e0;
+  --color-text-dark: #1b1b1d;
+  --color-text-light: #e0e0e0;
+
+  --color-accent: #0078ff;
+  --color-accent-hover: #005fcc;
+  --color-success: #2ecc71;
+  --color-warning: #f1c40f;
+  --color-error: #e74c3c;
+  --color-border: #dcdcdc;
+
+  /* Semantic Mapping */
+  /* --color-primary: var(--color-accent);
+  --color-secondary: var(--neutral-600);
+  --color-danger: var(--color-error);
+  --color-warn: var(--color-warning);
+  --color-ok: var(--color-success); */
+
+  /* Transition */
+  --transition-speed: 0.25s;
+}
+
+/* 3. Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121212;
+    --color-bg-alt: #1a1a1a;
+    --color-surface: #222;
+    --color-text: #e0e0e0;
+    --color-text-muted: #aaa;
+    --color-text-reverse: #1b1b1d;
+
+    --color-accent: #3b82f6;
+    --color-accent-hover: #2563eb;
+    --color-success: #27ae60;
+    --color-warning: #eab308;
+    --color-danger: #ef4444;
+    --color-border: #2c2c2c;
+  }
+}
+
+/* 4. Typography & Base Elements */
+html {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  font-family: var(--font-family-sans);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.25;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--space-3);
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 4vw, 2.25rem); }
+h3 { font-size: clamp(1.25rem, 3vw, 1.75rem); }
+h4 { font-size: 1.125rem; }
+
+p {
+  margin-bottom: var(--space-3);
+}
+
+a {
+  /* color: var(--color-accent); */
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* 5. Form Elements */
+button {
+  font-family: inherit;
+  font-size: 1rem;
+  /* background: var(--color-accent); */
+  color: #fff;
+  border: none;
+  /* border-radius: 0.4rem; */
+  /* padding: 0.6rem 1rem; */
+  cursor: pointer;
+  transition: background var(--transition-speed);
+}
+button:hover {
+  /* background: var(--color-accent-hover); */
+}
+
+input, textarea, select {
+  font-family: inherit;
+  /* font-size: 1rem; */
+  color: var(--color-text);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: 0.3rem;
+  padding: 0.5rem;
+  transition: background var(--transition-speed), border var(--transition-speed);
+}
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--color-border);
+}
+
+/* 6. Layout Helpers */
+@media (min-width: 475px) {
+    .container {
+        max-width: 475px;
+    }
+}
+
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px;
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        max-width: 1024px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        max-width: 1280px;
+    }
+}
+
+@media (min-width: 1536px) {
+    .container {
+        max-width: 1536px;
+    }
+}
+
+.flex {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* 7. Utility Classes */
+.text-center { text-align: center; }
+.text-muted { color: var(--color-text-muted); }
+
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mb-2 { margin-bottom: var(--space-2); }
+
+.p-2 { padding: var(--space-2); }
+.rounded { border-radius: 0.5rem; }
+.shadow { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+.hidden { display: none !important; }
+
+/* 8. Accessibility & Motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* 9. Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-alt);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* 10. Manual Theme Override (optional JS hook) */
+[data-theme="dark"] {
+    --color-bg: #121212;
+    --color-bg-alt: #1a1a1a;
+    --color-surface: #222;
+    --color-text: #e0e0e0;
+    --color-text-muted: #aaa;
+    --color-text-reverse: #1b1b1d;
+
+    --color-accent: #3b82f6;
+    --color-accent-hover: #2563eb;
+    --color-success: #27ae60;
+    --color-warning: #eab308;
+    --color-error: #ef4444;
+    --color-border: #2c2c2c;
+}

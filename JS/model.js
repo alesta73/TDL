@@ -42,6 +42,7 @@ export const model = {
         return true;
     },
     //???
+
     addTask(currentListName, taskListName, taskName) {
         const obj = this.getLists();
         const cur = obj[currentListName];

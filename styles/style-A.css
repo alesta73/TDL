@@ -1,7 +1,29 @@
 /* ---------------------------------------------------
    Imports & Base Styles
 --------------------------------------------------- */
+@import url('default.css');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root{
+    --color-sidebar: #151A2E;
+    --color-topbar: #233C67;
+    --text-shadow: 2px 2px lightgray;
+
+}
+
+[data-theme="dark"] {
+    --color-sidebar: #151A2E;
+    --color-topbar: #1b2440;
+    --text-shadow: 2px 2px rgb(39, 39, 39);
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-sidebar: #151A2E;
+    --color-topbar: #1b2440;
+    --text-shadow: 2px 2px rgb(39, 39, 39);
+  }
+}
+
 
 * {
     margin: 0;
@@ -12,26 +34,9 @@
 
 body {
     min-height: 100vh;
-    background: linear-gradient(#F2F3FF, #CBD4FF);
+    /* background: linear-gradient(#F2F3FF, #CBD4FF); */
+    background: var(--color-bg);
     padding-left: 85px;
-}
-
-
-/* Testing: */
-
-.testing{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    padding: 1.5em;
-}
-
-.clickable{
-    background:#53AC53;
-    padding: 0.5em;
-    border-radius: 8px;
-    color: white;
-    cursor: pointer;
 }
 
 /* ---------------------------------------------------
@@ -43,7 +48,7 @@ body {
     left: 0;
     width: 260px;
     height: 100vh;
-    background: #151A2E;
+    background: var(--color-sidebar);
     transition: all 0.4s ease;
     display: flex;
     flex-direction: column;
@@ -91,7 +96,9 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    background: #EEF2FF;
+    /* background: #EEF2FF; */
+    background: var(--color-surface-light);
+    color: var(--color-text-dark);
     transition: 0.4s ease;
     margin: 0;
     padding: 0;
@@ -117,14 +124,9 @@ body {
 /* Sidebar Navigation */
 
 .sidebar-nav {
-    /* margin-top: 30px; */
-    /* flex-grow: 1; */
-    /* overflow-y: auto; */
     display: flex;
     justify-content: center;
-    /* padding: 25px; */
     width: 100%;
-
 }
 
 .sidebar-nav .nav-list {
@@ -157,7 +159,7 @@ body {
     width: 18px;
     height: 18px;
     /* padding: 8px; */
-    color: #F2F3FF;
+    color: var(--color-text-light);
     border: none;
     background: transparent;
     cursor: pointer;
@@ -166,7 +168,7 @@ body {
 }
 
 .deleteListBtn:hover {
-    color: red;
+    color: var(--color-danger);
     transition: 0.4s ease;
 }
 
@@ -179,7 +181,7 @@ body {
 }
 
 .sidebar-nav .nav-item .nav-link {
-    color: #fff;
+    color: var(--color-text-light);
     display: flex;
     text-decoration: none;
     white-space: nowrap;
@@ -194,7 +196,9 @@ body {
 
 .sidebar-nav .nav-item:hover>.nav-link {
     background: #EEF2FF;
-    color: #151A2E;
+    /* color: #151A2E; */
+    /* color: red; */
+    color: var(--color-text-dark)
 }
 
 .sidebar-nav .nav-link .nav-label {
@@ -239,14 +243,14 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    color: #EEF2FF;
+    color: var(--color-text-light);
     cursor: pointer;
     transition: 0.4s ease;
 }
 
 .acc:hover {
     background-color: #d9e1fd;
-    color: #151A2E;
+    color: var(--color-text-dark);
     transition: 0.4s ease;
 }
 
@@ -288,12 +292,17 @@ main {
     width: 100%;
     margin: 0 0 0.75rem;
     box-sizing: border-box;
-    border: 2px solid #b1badf;
+    border: 2px solid var(--color-border);
     border-radius: 16px;
-    background: #b0cbf0;
+    background: var(--color-surface);
+    color: var(--color-text);
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     padding: 10px;
     position: relative; 
+}
+.taskListDiv > h3{
+    width: 92%;
+    /* background: var(--color-warning); */
 }
 
 
@@ -307,7 +316,8 @@ main {
     width: 18px;
     height: 18px;
     /* padding: 8px; */
-    color: #151A2E;
+    /* color: #151A2E; */
+    color: var(--text-muted);
     border: none;
     background: transparent;
     cursor: pointer;
@@ -317,7 +327,7 @@ main {
     transition: 0.4s ease;
 }
 .deleteListBtn:hover {
-    color: red;
+    color: var(--color-danger);
     transition: 0.4s ease;
 }
 
@@ -329,7 +339,7 @@ main {
 .line {
     width: 100%;
     height: 0;
-    border: 1px solid #151A2E;
+    border: 1px solid var(--color-text-dark);
 }
 
 /* ---------------------------------------------------
@@ -346,11 +356,14 @@ main {
 
 .taskInput,
 .miniTask {
-    flex: 1;
-    width: 10%;
-    padding: 5px;
-    border-radius: 8px;
-    margin-right: 10px;
+  /* flex: 0.5; */
+  width: 100%;
+  padding: 5px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-alt);
+  color: var(--color-text);
+  margin-right: 10px;
 }
 
 .taskInput:focus,
@@ -361,12 +374,16 @@ input:focus {
 
 .taskButton {
     border: none;
-    background: #151A2E;
-    color: #F2F3FF;
+    background: var(--color-bg-alt);
+    color: var(--color-text);
     cursor: pointer;
     border-radius: 0.5rem;
     height: 32px;
     aspect-ratio: 1/1;
+}
+.taskButton:hover {
+    border: 1px solid var(--color-success);
+    /* background: var(--color-bg); */
 }
 
 .addtask {
@@ -376,19 +393,16 @@ input:focus {
     height: 40px;
     border-radius: 8px;
     border: none;
-    background: #151A2E;
-    color: #EEF2FF;
+    /* border: 1px solid var(--color-success); */
+    background: var(--color-surface);
+    color: var(--color-text);
     padding-left: 0.5rem;
     padding-right: 0.5rem;
 }
 
 .addtask:hover,
 .taskButton:hover {
-    /* background-color: #d9e1fd; */
-    /* color: #151A2E; */
-    background: #2a3356;
-    /* lite ljusare/djupare blå vid hover */
-
+    border: 1px solid var(--color-success);
     transition: 0.4s ease;
 }
 
@@ -463,17 +477,22 @@ input:focus {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    border: none;
-    background: #151A2E;
-    color: #EEF2FF;
+    /* border: var(--color-border); */
+    /* border: 1px solid var(--color-warning); */
+    background: var(--color-bg-alt);
+    color: var(--color-text);
     width: 32px;
+    height: 32px;
     aspect-ratio: 1/1;
     cursor: pointer;
     transition: all 0.3s ease;
     font-size: 14px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    margin-left: 10px;
+    /* margin-left: 10px; */
     position: relative;
+}
+.deleteTaskBtn:hover{
+    border: 1px solid var(--color-warning);
 }
 
 .taskList>li:hover>.editBtnContainer>.deleteTaskBtn {
@@ -569,7 +588,7 @@ li:hover > .chkbox {
 }
 
 .dateLabel {
-    text-shadow: 1px 1px lightgray;
+    text-shadow: var(--text-shadow);
 }
 
 .exitBtnContainer {
@@ -590,13 +609,13 @@ li:hover > .chkbox {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 300px;
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     border-radius: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    z-index: 10;
+    z-index: var(--z-modal);
 }
 
 .closeListSettings {
@@ -624,7 +643,7 @@ li:hover > .chkbox {
     padding: 8px 12px;
     border-radius: 8px;
     border: none;
-    background: #151A2E;
+    background: var(--color-bg);
     color: #EEF2FF;
     cursor: pointer;
 }

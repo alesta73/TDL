@@ -88,7 +88,7 @@ export const view = {
 renderNewListInput() {
     // Öppna sidomeny om den är stängd
     if (this.els.sidebar.classList.contains("collapsed")) {
-      sidebar.classList.remove("collapsed");
+      this.els.sidebar.classList.remove("collapsed");
     }
 
     // Skapa DOM-element
@@ -158,7 +158,7 @@ renderNewListInput() {
     const wrap = document.createElement("div");
     wrap.classList.add("taskListDiv");
 
-    const h2 = document.createElement("h2");
+    const h2 = document.createElement("h3");
     h2.textContent = `${listName}: ${listDate}`;
 
     const deleteBtn = document.createElement("button");
