@@ -11,14 +11,19 @@
 
 }
 
+/* Data theme only for manual toggling of light/dark mode in html/js, not for built in
+   dark mode in search engine 
+   Keep data-theme and "media (prefers-color-scheme: dark)" identical*/
 [data-theme="dark"] {
-    --color-sidebar: #151A2E;
+    --color-sidebar: var(--color-surface);
     --color-topbar: #1b2440;
     --text-shadow: 2px 2px rgb(39, 39, 39);
 }
+
+/* For ease o */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-sidebar: #151A2E;
+    --color-sidebar: var(--color-surface);
     --color-topbar: #1b2440;
     --text-shadow: 2px 2px rgb(39, 39, 39);
   }

@@ -11,8 +11,6 @@
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     /* border: 2px solid red; */
-    /* margin-left: 85px; */
-    /* margin-right: 85px; */
 }
 
 
@@ -88,7 +86,6 @@
     .container {
         max-width: 390px;
     }
-
     .list-container{
         column-count: 1;
     }
@@ -106,11 +103,7 @@
 @media (min-width: 768px) {
     .container {
         max-width: 683px;
-    }
-   /* .list-container{
-        column-count: 3;
-    } */
- 
+    } 
 }
 
 @media (min-width: 1024px) {
@@ -120,8 +113,6 @@
       .list-container{
         column-count: 3;
     }
-
-    
 }
 
 @media (min-width: 1280px) {
@@ -131,7 +122,6 @@
      .list-container{
         column-count: 4;
     }
-   
 }
 
 @media (min-width: 1536px) {

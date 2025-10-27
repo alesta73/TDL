@@ -72,7 +72,6 @@
   --color-surface-dark: #222; 
   --color-text: #1b1b1d;
   --color-text-muted: #55575c;
-  --color-text-reverse: #e0e0e0;
   --color-text-dark: #1b1b1d;
   --color-text-light: #e0e0e0;
 
@@ -102,8 +101,7 @@
     --color-surface: #222;
     --color-text: #e0e0e0;
     --color-text-muted: #aaa;
-    --color-text-reverse: #1b1b1d;
-
+  
     --color-accent: #3b82f6;
     --color-accent-hover: #2563eb;
     --color-success: #27ae60;
@@ -185,6 +183,15 @@ input:focus, textarea:focus, select:focus {
 }
 
 /* 6. Layout Helpers */
+.container {
+    /* max-width: 1536px; */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    /* border: 2px solid var(--color-danger); */
+}
 @media (min-width: 475px) {
     .container {
         max-width: 475px;
@@ -280,12 +287,11 @@ input:focus, textarea:focus, select:focus {
     --color-surface: #222;
     --color-text: #e0e0e0;
     --color-text-muted: #aaa;
-    --color-text-reverse: #1b1b1d;
-
+  
     --color-accent: #3b82f6;
     --color-accent-hover: #2563eb;
     --color-success: #27ae60;
     --color-warning: #eab308;
-    --color-error: #ef4444;
+    --color-danger: #ef4444;
     --color-border: #2c2c2c;
 }
