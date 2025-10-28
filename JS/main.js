@@ -7,9 +7,9 @@ function computeDisplayDate(value) {
   const today = new Date();
   const tomorrow = new Date();
   tomorrow.setDate(today.getDate() + 1);
-  today.setHours(0,0,0,0);
-  tomorrow.setHours(0,0,0,0);
-  selected.setHours(0,0,0,0);
+  today.setHours(0, 0, 0, 0);
+  tomorrow.setHours(0, 0, 0, 0);
+  selected.setHours(0, 0, 0, 0);
 
   if (selected.getTime() === today.getTime()) return "Idag";
   if (selected.getTime() === tomorrow.getTime()) return "Imorgon";
@@ -17,6 +17,32 @@ function computeDisplayDate(value) {
 }
 
 // ------- Controllers -------
+function attachTaskListListeners(listName, taskListName, ul, addBtn, input, deleteBtn) {
+  function handleCreateTask() {
+    const name = input.value.trim();
+    if (!name) { alert("Ange en uppgift"); return; }
+
+    if (model.addTask(listName, taskListName, name)) {
+      const node = view.renderTask(ul, taskListName, name);
+      input.value = "";
+
+      node.deleteBtn.addEventListener("click", () => {
+        model.deleteTask(listName, taskListName, name);
+        node.li.remove();
+      });
+    }
+  }
+  addBtn.addEventListener("click", handleCreateTask);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleCreateTask();
+  });
+
+  deleteBtn.addEventListener("click", () => {
+    model.deleteTaskList(listName, taskListName);
+    deleteBtn.closest(".taskListDiv").remove();
+  });
+}
+
 function loadListToMain(listName) {
   const data = model.getLists();
   const selected = data[listName];
@@ -40,26 +66,7 @@ function loadListToMain(listName) {
         node.li.remove();
       });
     });
-
-    // add new task
-    addBtn.addEventListener("click", () => {
-      const name = input.value.trim();
-      if (!name) { alert("Ange en uppgift"); return; }
-      if (model.addTask(listName, taskList.name, name)) {
-        const node = view.renderTask(ul, taskList.name, name);
-        input.value = "";
-        node.deleteBtn.addEventListener("click", () => {
-          model.deleteTask(listName, taskList.name, name);
-          node.li.remove();
-        });
-      }
-    });
-
-    // delete task list
-    deleteBtn.addEventListener("click", () => {
-      model.deleteTaskList(listName, taskList.name);
-      deleteBtn.closest(".taskListDiv").remove();
-    });
+    attachTaskListListeners(listName, taskList.name, ul, addBtn, input, deleteBtn);
   });
 }
 
@@ -96,15 +103,15 @@ function handleCreateNewList() {
 
   // När användaren trycker Enter
   input.addEventListener("keydown", (e) => {
-    
+
     if (e.key === "Enter") {
       const obj = model.getLists();
 
-      for(const key in obj){
-          if(input.value === key){
-            alert("Lista finns redan med samma namn");
-            return;
-          }
+      for (const key in obj) {
+        if (input.value === key) {
+          alert("Lista finns redan med samma namn");
+          return;
+        }
       };
       const listName = input.value.trim();
       if (!listName) {
@@ -162,30 +169,20 @@ function createTaskList() {
     const { ul, addBtn, input, deleteBtn } =
       view.renderTaskListDiv(taskListName, displayDate);
 
-    addBtn.addEventListener("click", () => {
-      const name = input.value.trim();
-      if (!name) { alert("Ange en uppgift"); return; }
-      if (model.addTask(currentListName, taskListName, name)) {
-        const node = view.renderTask(ul, taskListName, name);
-        input.value = "";
-        node.deleteBtn.addEventListener("click", () => {
-          model.deleteTask(currentListName, taskListName, name);
-          node.li.remove();
-        });
-      }
-    });
+    if (model.addTaskList(currentListName, taskListName, displayDate)) {
+      const { ul, addBtn, input, deleteBtn } =
+        view.renderTaskListDiv(taskListName, displayDate);
 
-    deleteBtn.addEventListener("click", () => {
-      model.deleteTaskList(currentListName, taskListName);
-      deleteBtn.closest(".taskListDiv").remove();
-    });
+      attachTaskListListeners(currentListName, taskListName, ul, addBtn, input, deleteBtn);
 
-    // reset form UI
-    view.els.selectedList.value = "";
-    view.els.dateInput.value = "";
-    view.els.ls.classList.toggle("d-none");
+      // reset form UI
+      view.els.selectedList.value = "";
+      view.els.dateInput.value = "";
+      view.els.ls.classList.toggle("d-none");
+    }
   }
 }
+
 
 // ------- App init & listeners -------
 function init() {
@@ -202,11 +199,11 @@ function init() {
   view.els.sidebarToggler.addEventListener("click", () => view.toggleSidebar());
   document.addEventListener("click", (e) => {
     // console.log(e.target)
-    if (!view.els.sidebar.contains(e.target) && !view.els.navLink.contains(e.target)){
+    if (!view.els.sidebar.contains(e.target) && !view.els.navLink.contains(e.target)) {
       console.log(e.target);
-view.els.sidebar.classList.add("collapsed");
+      view.els.sidebar.classList.add("collapsed");
 
-    } 
+    }
   });
 
   view.els.createNewListBtn.addEventListener("click", () => { view.toggleSidebar(); });
@@ -222,7 +219,6 @@ view.els.sidebar.classList.add("collapsed");
     if (e.key === "Enter") {
       e.preventDefault();
       if (typeof view.els.selectedDate.showPicker === "function") view.els.selectedDate.showPicker();
-      else view.els.selectedDate.focus();
     }
   });
 
