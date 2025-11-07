@@ -15,6 +15,8 @@ function computeDisplayDate(value) {
   return value;
 }
 
+
+
 // ------- Controllers -------
 function loadListToMain(listName) {
   const data = model.getLists();
@@ -41,18 +43,29 @@ function loadListToMain(listName) {
     });
 
     // add new task
-    addBtn.addEventListener("click", () => {
-      const name = input.value.trim();
-      if (!name) { alert("Ange en uppgift"); return; }
-      if (model.addTask(listName, taskList.name, name)) {
-        const node = view.renderTask(ul, taskList.name, name);
-        input.value = "";
-        node.deleteBtn.addEventListener("click", () => {
-          model.deleteTask(listName, taskList.name, name);
-          node.li.remove();
-        });
-      }
+function handleAddTask() {
+  const name = input.value.trim();
+  if (!name) { alert("Ange en uppgift"); return; }
+
+  if (model.addTask(listName, taskList.name, name)) {
+    const node = view.renderTask(ul, taskList.name, name);
+    input.value = "";
+    node.deleteBtn.addEventListener("click", () => {
+      model.deleteTask(listName, taskList.name, name);
+      node.li.remove();
     });
+  }
+}
+
+// Klick på knappen
+addBtn.addEventListener("click", handleAddTask);
+
+// Enter-tangent i input-fältet
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    handleAddTask();
+  }
+});
 
     // delete task list
     deleteBtn.addEventListener("click", () => {
@@ -86,6 +99,8 @@ function loadListToMain(listName) {
 //   });
 // }
 
+
+
 function handleCreateNewList() {
   // Be view skapa ett inputfält för ny lista
   const { li, input } = view.renderNewListInput();
@@ -104,12 +119,17 @@ function handleCreateNewList() {
           alert("Lista finns redan med samma namn");
           return;
         }
+       
       };
       const listName = input.value.trim();
       if (!listName) {
         view.showAlert("Ange namn på lista");
         return;
       }
+       if(input.value.length>=15){
+          alert("Namn för långt. Maxtecken 15");
+          return;
+        }
 
       // Lägg till listan i modellen
       model.addList(listName);
@@ -148,15 +168,19 @@ function handleCreateNewList() {
 }
 
 function createTaskList() {
+  console.log("skapa lista")
   const { selectedList, dateInput, listNameH1 } = view.els;
   if (!dateInput.value) { alert("Ange datum"); return; }
   if (!selectedList.value.trim()) { alert("Ange uppgift"); return; }
 
   const displayDate = computeDisplayDate(dateInput.value);
   const taskListName = selectedList.value.trim();
+  console.log(taskListName);
   const currentListName = listNameH1.textContent || Object.keys(model.getLists())[0];
+  console.log(currentListName);
 
   if (model.addTaskList(currentListName, taskListName, displayDate)) {
+    console.log("model.addtasklist");
     // render immediately in main
     const { ul, addBtn, input, deleteBtn } =
       view.renderTaskListDiv(taskListName, displayDate);

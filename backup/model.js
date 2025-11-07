@@ -27,8 +27,10 @@ export const model = {
         this.save(obj);
     },
     addTaskList(currentListName, taskListName, displayDate) {
+        console.log("addtasklist")
         const obj = this.getLists();
         const cur = obj[currentListName];
+        console.log(obj, cur)
         if (!cur) return false;
 
         cur.taskLists[taskListName] = {
@@ -58,11 +60,11 @@ export const model = {
         this.save(obj);
         return { ok: true };
     },
-    deleteTaskList(currentListName, taskListName, taskName) {
-        const obj = this.getLists();
-        delete obj[currentListName]?.taskLists?.tasks?.[taskName];
-        this.save(obj);
-    },
+  deleteTaskList(currentListName, taskListName) {
+    const obj = this.getLists();
+    delete obj[currentListName]?.taskLists?.[taskListName];
+    this.save(obj);
+},
     deleteTask(currentListName, taskListName, taskName) {
         const obj = this.getLists();
         delete obj[currentListName]?.taskLists?.[taskListName]?.tasks?.[taskName];
